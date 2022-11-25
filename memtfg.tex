@@ -1,0 +1,442 @@
+\documentclass[spanish,a4paper,12pt,oneside]{extreport}
+
+\usepackage[dvips]{graphicx}
+\usepackage[dvips]{epsfig}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage{alltt}
+
+\usepackage[ruled,vlined,commentsnumbered,linesnumbered,inoutnumbered,titlenotnumbered,noend]{algorithm2e}
+\SetKwRepeat{Do}{do}{while}
+
+\usepackage{multirow}
+\usepackage{array} 
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{bigstrut}
+\usepackage{booktabs}
+\usepackage{caption}
+\usepackage{chngpage}
+\usepackage{float}
+\usepackage{comment}
+%\usepackage{enumitem,lipsum}
+\usepackage{graphicx}
+\usepackage{lscape}
+\usepackage{microtype}
+\usepackage{natbib}
+\usepackage{pdflscape}
+\usepackage{rotating}
+\usepackage{subcaption}
+\usepackage{ctable}
+\usepackage{hyperref}
+\usepackage{enumerate}
+\usepackage{gensymb}
+\usepackage{eurosym}
+\usepackage{xcolor}
+\usepackage{tabu}
+\usepackage[export]{adjustbox}[2011/08/13]
+\usepackage{lineno}
+\usepackage{epigraph}
+%\usepackage[sanitize=none]{glossaries}
+\usepackage[toc]{glossaries}
+
+%\\linenumbers
+%\setlength\linenumbersep{5pt}
+%\renewcommand\linenumberfont{\normalfont\tiny\sffamily\color{gray}}
+
+%\makenoidxglossaries
+\makeglossaries
+
+\input{glosary}
+\usepackage[top=2cm, bottom=2cm, left=2cm, right=2cm]{geometry}
+
+\newenvironment{sourcecode}
+{\begin{list}{}{\setlength{\leftmargin}{1em}}\item\scriptsize\bfseries}
+{\end{list}}
+
+\newenvironment{littlesourcecode}
+{\begin{list}{}{\setlength{\leftmargin}{1em}}\item\tiny\bfseries}
+{\end{list}}
+
+\newenvironment{summary}
+{\par\noindent\begin{center}\textbf{Abstract}\end{center}\begin{itshape}\par\noindent}
+{\end{itshape}}
+
+\newenvironment{keywords}
+{\begin{list}{}{\setlength{\leftmargin}{1em}}\item[\hskip\labelsep \bfseries Keywords:]}
+{\end{list}}
+
+\newenvironment{palabrasClave}
+{\begin{list}{}{\setlength{\leftmargin}{1em}}\item[\hskip\labelsep \bfseries Palabras clave:]}
+{\end{list}}
+
+\usepackage{bera}% optional: just to have a nice mono-spaced font
+\usepackage{listings}
+\usepackage{xcolor}
+
+\colorlet{punct}{red!60!black}
+\definecolor{background}{HTML}{EEEEEE}
+\definecolor{delim}{RGB}{20,105,176}
+\colorlet{numb}{magenta!60!black}
+
+\lstdefinelanguage{json}{
+    basicstyle=\normalfont\ttfamily,
+    numbers=left,
+    numberstyle=\scriptsize,
+    stepnumber=1,
+    numbersep=8pt,
+    showstringspaces=false,
+    breaklines=true,
+    frame=lines,
+    backgroundcolor=\color{background},
+    literate=
+     *{0}{{{\color{numb}0}}}{1}
+      {1}{{{\color{numb}1}}}{1}
+      {2}{{{\color{numb}2}}}{1}
+      {3}{{{\color{numb}3}}}{1}
+      {4}{{{\color{numb}4}}}{1}
+      {5}{{{\color{numb}5}}}{1}
+      {6}{{{\color{numb}6}}}{1}
+      {7}{{{\color{numb}7}}}{1}
+      {8}{{{\color{numb}8}}}{1}
+      {9}{{{\color{numb}9}}}{1}
+      {:}{{{\color{punct}{:}}}}{1}
+      {,}{{{\color{punct}{,}}}}{1}
+      {\{}{{{\color{delim}{\{}}}}{1}
+      {\}}{{{\color{delim}{\}}}}}{1}
+      {[}{{{\color{delim}{[}}}}{1}
+      {]}{{{\color{delim}{]}}}}{1},
+}
+
+% Configuración de los colores de los enlaces
+\hypersetup{
+    colorlinks = true,
+    linkcolor = blue,
+    filecolor = magenta,      
+    urlcolor = cyan,
+}
+
+\begin{document}
+
+\renewcommand\listtablename{Índice de Tablas}    
+\renewcommand\listfigurename{Índice de Figuras}    
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% First Page
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\pagestyle{empty}
+\thispagestyle{empty}
+
+
+\newcommand{\HRule}{\rule{\linewidth}{1mm}}
+\setlength{\parindent}{0mm}
+\setlength{\parskip}{0mm}
+
+\vspace*{\stretch{0.5}}
+
+\begin{center}
+\includegraphics[scale=0.8]{images/escuela-ingenieria-tecnologia-original}\\[10mm]
+{\Huge Trabajo de Fin de Grado}
+\end{center}
+
+\HRule
+\begin{flushright}
+        {\Huge GitHub Cli Extensions for the GitHub Education Community} \\[2.5mm]
+        {\Large \textit{Herramientas para la automatización de los flujos de trabajo del docente que usa GitHub}} \\[5mm]
+        {\Large Cristo García González} \\[5mm]
+
+\end{flushright}
+\HRule
+\vspace*{\stretch{2}}
+\begin{center}
+  \Large La Laguna, \today
+\end{center}
+
+\setlength{\parindent}{5mm}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Signature page (add the official stamp)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\thispagestyle{empty}
+
+D. {\bf Casiano Rodríguez León}, con N.I.F. 42.020.072-S  profesor Catedrático de Universidad adscrito al Departamento de Nombre del Departamento de la Universidad de La Laguna, como tutor
+
+
+\bigskip
+\bigskip
+{\bf C E R T I F I C A N}
+
+\bigskip
+\bigskip
+Que la presente memoria titulada:
+
+\bigskip
+''{\it GitHub Cli Extensions for the GitHub
+Education Community}''
+
+\bigskip
+\bigskip
+\bigskip
+
+\noindent ha sido realizada bajo su dirección por D. {\bf Cristo García González},
+con N.I.F. 43489575W.
+
+\bigskip
+\bigskip
+
+Y para que así conste, en cumplimiento de la legislación vigente y a los efectos
+oportunos firman la presente en La Laguna a \today
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\thispagestyle{empty}
+
+%{ \flushright
+
+\begin{LARGE}
+Agradecimientos
+\end{LARGE}
+
+\hspace{3mm}
+
+\begin{large}
+A mis amigos graduados por aconsejarme, fortalecerme y confiar en mí.\\
+A mis al mismo tiempo amigos y compañeros por compartir sus propias
+experiencias conmigo y hacer que mi vida universitaria sea una
+experiencia para recordar.\\
+A los profesores Albano José González Fernández, Francisco de Sande
+González, Marcos Colebrook-Santamaria, Iván Castilla Rodríguez, Ignacio
+García Marco y Carlos Alberto Martín Galán por la excelencia y vocación
+que aplican en su trabajo.\\
+A mi familia por no esperar nunca menos de mí\\
+Y como no a mi tutor Casiano Rodríguez León por ofrecer un proyecto y unas tecnologías interesantes y por ser un profesor y usuario exigente que le importa un buen resultado
+\end{large}
+
+%}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\thispagestyle{empty}
+
+\bigskip
+\begin{LARGE}
+Licencia
+\end{LARGE}
+
+\begin{center}
+\includegraphics[scale=1.8]{images/by_88x31}\\[5mm]
+\end{center}
+
+\begin{large}
+© Esta obra está bajo una licencia de Creative Commons Reconocimiento 4.0 Internacional.
+\end{large}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage 
+\thispagestyle{empty}
+
+\begin{abstract}
+Es un hecho consolidado el uso de GitHub como plataforma para la enseñanza, especialmente en el ámbito de 
+la Informática. 
+La propia empresa  apoya estas iniciativas dentro de un grupo de acciones que se engloban 
+bajo el término  GitHub Education y que incluye no solo descuentos, 
+foros, congresos, becas, etc. sino también herramientas específicas para la educación como  GitHub Classroom, 
+la cual da soporte al proceso de asignación de tareas.
+Recientemente, GitHub ha introducido una herramienta orientada a desarrolladores denominada GitHub CLI 
+que permite utilizar los servicios web de GitHub desde la línea de comandos y que 
+provee una arquitectura denominada gh-extensions 
+que posibilita que terceros puedan añadir nuevas funcionalidades a GitHub CLI. 
+
+Este trabajo presenta una gh-extension denominada \verb|gh-edu| 
+que pretende ser la base para un ecosistema de extensiones que  
+facilita el flujo de trabajo diario de profesores y alumnos
+en tareas como: la creación y manejo de organizaciones asociadas a asignaturas,
+la creación y manejo de asignaciones de tareas,
+ayudar en el descubrimiento de casos de plagio,
+obtener información sobre la actividad de los alumnos,
+facilitar la respuesta pronta a las dudas, 
+facilitar la elaboración la retroalimentación al alumno y
+mejorar la eficiencia en los procesos de evaluación. 
+Es nuestra esperanza que esta herramienta sea de utilidad para los docentes que utilizan GitHub y que 
+en el futuro aparezcan contribuciones de la comunidad con extensiones que cubran nuevos aspectos de la labor docente.
+\begin{palabrasClave}
+github-education, github-cli, github-classroom, graphql, rest, git, terminal, javascript, typescript, jq, go
+\end{palabrasClave}
+
+\end{abstract}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage 
+\vspace*{200px}
+\thispagestyle{empty}
+
+\begin{summary}
+  The use of GitHub as a platform for teaching is a consolidated fact, especially in the field of
+  computing.
+  The company itself supports these initiatives within a group of actions that are included
+  under the term GitHub Education and that includes not only discounts,
+  forums, congresses, scholarships, etc. but also specific tools for education such as GitHub Classroom,
+  which supports the task assignment process.
+  GitHub has recently introduced a developer-oriented tool called GitHub CLI.
+  that allows you to use GitHub web services from the command line and that
+  provides an architecture called gh-extensions
+  that enables third parties to add new functionality to GitHub CLI.
+  
+  This work presents a gh-extension named \verb|gh-edu|
+  that aims to be the basis for an ecosystem of extensions that
+  facilitates the daily workflow of teachers and students
+  in tasks such as: the creation and management of organizations associated with subjects,
+  creating and managing task assignments,
+  help in the discovery of cases of plagiarism,
+  obtain information about student activity,
+  facilitate prompt response to queries,
+  facilitate the elaboration of feedback to the student and
+  improve efficiency in evaluation processes.
+  It is our hope that this tool will be useful to educators who use GitHub and that
+  community contributions will appear in the future with extensions covering new aspects of teaching.
+\begin {keywords}
+github-education, github-cli, github-classroom, graphql, rest, git, terminal, javascript, typescript, jq, go
+\end {keywords}
+
+\end{summary}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage{\pagestyle{empty}}
+\thispagestyle{empty}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\pagestyle{myheadings} %my head defined by markboth or markright
+% No funciona bien \markboth sin "twoside" en \documentclass, pero al
+% ponerlo se dan un montÃ³n de errores de underfull \vbox, con lo que no se
+% ha puesto.
+
+
+%%Aqui debería poner el nombre del proyecto pero, como es muy grande no cabe y se ve feo en el PDF
+\markboth{xxxxx}{}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Numeracion en romanos
+\renewcommand{\thepage}{\roman{page}}
+\setcounter{page}{1}
+\pagestyle{plain} 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+{\hypersetup{linkcolor=black}
+\tableofcontents
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage{\pagestyle{empty}}
+
+\listoffigures
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage{\pagestyle{empty}}
+
+\listoftables
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage{\pagestyle{empty}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\thispagestyle{empty}
+
+%Numeracion a partir del capitulo I
+\renewcommand{\thepage}{\arabic{page}}
+\setcounter{page}{1}
+\pagestyle{plain}
+
+\chapter{\LARGE Introducción, Antecedentes y Estado del Arte}
+\label{chapter:intro}
+
+\input{introduccion.tex}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage{\pagestyle{empty}}
+\thispagestyle{empty}
+
+\chapter{\LARGE Tecnologías}
+\label{chapter:dos}
+
+\input{tecnologias.tex}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage{\pagestyle{empty}}
+\thispagestyle{empty}
+
+\chapter{\LARGE Modo de uso}
+\label{chapter:modo-de-uso}
+
+\input{uso.tex}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage{\pagestyle{empty}}
+\thispagestyle{empty}
+
+\chapter{\LARGE Diseño}
+\label{chapter:tres}
+
+\input{disenyo.tex}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage{\pagestyle{empty}}
+\thispagestyle{empty}
+
+\chapter{\LARGE Implementación}
+\label{chapter:cuatro}
+
+\input{implementacion.tex}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage{\pagestyle{empty}}
+\thispagestyle{empty}
+
+\chapter{\LARGE Conclusiones y líneas futuras}
+\label{chapter:Resultados}
+
+\input{conclusiones.tex}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage{\pagestyle{empty}}
+\thispagestyle{empty}
+
+\chapter{\LARGE Summary and Conclusions}
+\label{chapter:Conclusiones}
+
+\input{conclusions.tex}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage{\pagestyle{empty}}
+\thispagestyle{empty}
+
+\chapter{\LARGE Presupuesto}
+\label{chapter:presupuesto}
+
+\input{presupuesto.tex}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage{\pagestyle{empty}\cleardoublepage}
+\thispagestyle{empty}
+
+\begin{appendix}
+
+\chapter{\LARGE Repositorios del ecosistema}
+\label{appendix:1}
+\input{apendice1.tex}
+
+\end{appendix}
+%\printnoidxglossaries
+\printglossary[title=Glosario, toctitle=Glosario]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\begin{thebibliography}{X}
+% Aquí figurará la bibliografía
+%\end{thebibliography}
+%\bibliographystyle{plain}
+\bibliographystyle{unsrt}
+
+\bibliography{memtfg} 
+%\bibliography{bib.tex}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{document}
+
