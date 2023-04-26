@@ -141,9 +141,9 @@
 
 \HRule
 \begin{flushright}
-        {\Huge GitHub Cli Extensions for the GitHub Education Community} \\[2.5mm]
-        {\Large \textit{Herramientas para la automatización de los flujos de trabajo del docente que usa GitHub}} \\[5mm]
-        {\Large Cristo García González} \\[5mm]
+        {\Huge Generador Estático de LMS} \\[2.5mm]
+        {\Large \textit{Astro}} \\[5mm]
+        {\Large Jaime Armas Rivero} \\[5mm]
 
 \end{flushright}
 \HRule
@@ -160,7 +160,7 @@
 \newpage
 \thispagestyle{empty}
 
-D. {\bf Casiano Rodríguez León}, con N.I.F. 42.020.072-S  profesor Catedrático de Universidad adscrito al Departamento de Nombre del Departamento de la Universidad de La Laguna, como tutor
+D. {\bf Casiano Rodríguez León}, con N.I.F. 42.020.072-S  profesor Catedrático de Universidad adscrito al Departamento de Ingeniería Informática y de Sistemas de la Universidad de La Laguna, como tutor
 
 
 \bigskip
@@ -179,8 +179,8 @@ Education Community}''
 \bigskip
 \bigskip
 
-\noindent ha sido realizada bajo su dirección por D. {\bf Cristo García González},
-con N.I.F. 43489575W.
+\noindent ha sido realizada bajo su dirección por D. {\bf Jaime Armas Rivero},
+con N.I.F. 79084143T.
 
 \bigskip
 \bigskip
@@ -202,15 +202,6 @@ Agradecimientos
 
 \begin{large}
 A mis amigos graduados por aconsejarme, fortalecerme y confiar en mí.\\
-A mis al mismo tiempo amigos y compañeros por compartir sus propias
-experiencias conmigo y hacer que mi vida universitaria sea una
-experiencia para recordar.\\
-A los profesores Albano José González Fernández, Francisco de Sande
-González, Marcos Colebrook-Santamaria, Iván Castilla Rodríguez, Ignacio
-García Marco y Carlos Alberto Martín Galán por la excelencia y vocación
-que aplican en su trabajo.\\
-A mi familia por no esperar nunca menos de mí\\
-Y como no a mi tutor Casiano Rodríguez León por ofrecer un proyecto y unas tecnologías interesantes y por ser un profesor y usuario exigente que le importa un buen resultado
 \end{large}
 
 %}
@@ -242,25 +233,30 @@ La propia empresa  apoya estas iniciativas dentro de un grupo de acciones que se
 bajo el término  GitHub Education y que incluye no solo descuentos, 
 foros, congresos, becas, etc. sino también herramientas específicas para la educación como  GitHub Classroom, 
 la cual da soporte al proceso de asignación de tareas.
-Recientemente, GitHub ha introducido una herramienta orientada a desarrolladores denominada GitHub CLI 
-que permite utilizar los servicios web de GitHub desde la línea de comandos y que 
-provee una arquitectura denominada gh-extensions 
-que posibilita que terceros puedan añadir nuevas funcionalidades a GitHub CLI. 
 
-Este trabajo presenta una gh-extension denominada \verb|gh-edu| 
-que pretende ser la base para un ecosistema de extensiones que  
-facilita el flujo de trabajo diario de profesores y alumnos
-en tareas como: la creación y manejo de organizaciones asociadas a asignaturas,
-la creación y manejo de asignaciones de tareas,
-ayudar en el descubrimiento de casos de plagio,
-obtener información sobre la actividad de los alumnos,
-facilitar la respuesta pronta a las dudas, 
-facilitar la elaboración la retroalimentación al alumno y
-mejorar la eficiencia en los procesos de evaluación. 
-Es nuestra esperanza que esta herramienta sea de utilidad para los docentes que utilizan GitHub y que 
-en el futuro aparezcan contribuciones de la comunidad con extensiones que cubran nuevos aspectos de la labor docente.
+Además, debido a la creciente popularización de las páginas web estáticas basadas en la metodología JAMstack
+se está extendiendo cada vez más su uso y están saliendo nuevas tecnologías que se respalden en estas.
+
+Este trabajo presenta una herramienta que permita generar LMS estáticos, facilitando el trabajo y configuración de los mismos.
+Los LMS generados siguen metodologías y prácticas que son comunes en GitHub Education
+y hacen uso de los servicios y herramientas que proporciona GitHub.
+La cual se aprovechara de la API GraphQL de GitHub para conectarse con las tareas e información
+dentro la organización creada por el profesor para impartir sus clases e incorporarlas dentro del LMS.
+
+% Este trabajo presenta una gh-extension denominada \verb|gh-edu| 
+% que pretende ser la base para un ecosistema de extensiones que  
+% facilita el flujo de trabajo diario de profesores y alumnos
+% en tareas como: la creación y manejo de organizaciones asociadas a asignaturas,
+% la creación y manejo de asignaciones de tareas,
+% ayudar en el descubrimiento de casos de plagio,
+% obtener información sobre la actividad de los alumnos,
+% facilitar la respuesta pronta a las dudas, 
+% facilitar la elaboración la retroalimentación al alumno y
+% mejorar la eficiencia en los procesos de evaluación. 
+% Es nuestra esperanza que esta herramienta sea de utilidad para los docentes que utilizan GitHub y que 
+% en el futuro aparezcan contribuciones de la comunidad con extensiones que cubran nuevos aspectos de la labor docente.
 \begin{palabrasClave}
-github-education, github-cli, github-classroom, graphql, rest, git, terminal, javascript, typescript, jq, go
+github-education, astro, github-classroom, graphql, git, javascript, typescript
 \end{palabrasClave}
 
 \end{abstract}
@@ -270,31 +266,21 @@ github-education, github-cli, github-classroom, graphql, rest, git, terminal, ja
 \thispagestyle{empty}
 
 \begin{summary}
-  The use of GitHub as a platform for teaching is a consolidated fact, especially in the field of
-  computing.
-  The company itself supports these initiatives within a group of actions that are included
-  under the term GitHub Education and that includes not only discounts,
-  forums, congresses, scholarships, etc. but also specific tools for education such as GitHub Classroom,
-  which supports the task assignment process.
-  GitHub has recently introduced a developer-oriented tool called GitHub CLI.
-  that allows you to use GitHub web services from the command line and that
-  provides an architecture called gh-extensions
-  that enables third parties to add new functionality to GitHub CLI.
-  
-  This work presents a gh-extension named \verb|gh-edu|
-  that aims to be the basis for an ecosystem of extensions that
-  facilitates the daily workflow of teachers and students
-  in tasks such as: the creation and management of organizations associated with subjects,
-  creating and managing task assignments,
-  help in the discovery of cases of plagiarism,
-  obtain information about student activity,
-  facilitate prompt response to queries,
-  facilitate the elaboration of feedback to the student and
-  improve efficiency in evaluation processes.
-  It is our hope that this tool will be useful to educators who use GitHub and that
-  community contributions will appear in the future with extensions covering new aspects of teaching.
+It is a consolidated fact the use of GitHub as a platform for teaching, especially in the field of Computer Science.
+The company itself supports these initiatives within a group of actions that fall under the term GitHub Education,
+which includes not only discounts, forums, conferences, scholarships, etc. but also specific tools for
+education such as GitHub Classroom, which supports the task assignment process.
+
+In addition, due to the growing popularity of static web pages based on the JAMstack methodology,
+their use is increasingly widespread and new technologies that rely on them are emerging.
+
+This work presents a tool that allows generating static LMS, facilitating their work and configuration.
+The generated LMS follows methodologies and practices that are common in GitHub Education and
+make use of the services and tools provided by GitHub. It will take advantage of the GitHub GraphQL API
+to connect with the tasks and information within the organization created by the teacher to teach
+their classes and incorporate them into the LMS.
 \begin {keywords}
-github-education, github-cli, github-classroom, graphql, rest, git, terminal, javascript, typescript, jq, go
+github-education, astro, github-classroom, graphql, git, javascript, typescript
 \end {keywords}
 
 \end{summary}
