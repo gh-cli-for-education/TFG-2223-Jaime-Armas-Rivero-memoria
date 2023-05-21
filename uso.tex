@@ -1,4 +1,39 @@
-En este capítulo se explica como se utiliza el ecosistema, con intención de que se pueda entender el propósito de cada extensión. En los capítulos siguientes se entrará en más detalle con respecto a la toma de decisiones en el diseño y como se ha logrado implementar todo el ecosistema 
+En este capítulo se explica como se utiliza la aplicación, con intención de que se pueda entender el modo de uso. En los capítulos siguientes se entrará en más detalle con respecto a la toma de decisiones en el diseño y como se ha logrado implementar todo la aplicación. Antes de nada hay que destacar que aunque se use el manejador de paquetes npm para los ejemplos, también se puede usar con otros como \verb|yarn|\cite{yarn} o \verb|pnpm|\cite{pnpm}
+
+\section{Empezar una LMS con {\tt AdAstra}: create-adastra-lms}
+
+Para empezar a utilizar el generador de LMS lo primero que habrá que usar sera el paquete de \verb|npm|\cite{npm} \textbf{create-adastra-lms}. Este es un paquete de creación en npm y se usara usara junto al comando \verb|create|\cite{create-npm} de npm, para ser más específicos el comando a usar será \textbf{npm create adastra-lms}. Este comando cargará un programa de \verb|CLI|\cite{cli} que permitirá crear un proyecto de AdAstra. Los pasos a seguir dentro de este serían se puede ver en la figura \ref{fig:create-adastra}.
+
+\begin{figure}
+    \centering
+    \makebox[\textwidth][c]{\includegraphics[width=\textwidth]{}}
+    \caption{Pasos de la ejecución del paquete create-adastra-lms}
+    \label{fig:create-adastra}
+\end{figure}
+
+Tras usar este comando se creará un proyecto con la estructura mostrada en la figura \ref{fig:adastra-structure}.
+
+\begin{figure}
+    \centering
+    \makebox[\textwidth][c]{\includegraphics[width=\textwidth]{}}
+    \caption{Estructura de un proyecto creado con create-adastra-lms}
+    \label{fig:adastra-structure}
+\end{figure}
+
+\section{Configuración del LMS: adastra.config.js}
+
+El primer paso a seguir tras crear el proyecto será configurarlo. Para esto habrá que modificar el archivo \textbf{adastra.config.js} que se ha creado automáticamente. Dentro de este se podrán encontrar dos objetos, el primero llamado \textbf{tailwindConfig} que se puede ver en la figura \ref{fig:tailwindConfig}, el cual permitirá cambiar configuraciones relacionadas con el tema de la página que se creará como los colores primarios y secundarios, teniendo cada uno su opción para el estilo oscuro de la página, o incluso el tamaño que asignar al espaciado mínimo o la altura del navbar, etc. Y un segundo, llamado \textbf{organizationInfo} que se puede ver en la figura \ref{fig:organizationInfo}, este 
+
+\begin{figure}
+    \centering
+    \makebox[\textwidth][c]{\includegraphics[width=\textwidth]{}}
+    \caption{Objeto de configuración para el tema}
+    \label{fig:tailwindConfig}
+\end{figure}
+
+
+
+% --------------------------------------------------------------------------------------
 
 \section{El Núcleo de {\tt gh edu}: Core}
 

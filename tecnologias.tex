@@ -54,6 +54,16 @@ Como se menciono anteriormente Astro presenta un modelo de arquitectura de \verb
 
 En Astro puedes utilizar cualquier framework de componentes de UI (React, Svelte, Vue, etc.). La técnica en la que se basa este patrón de arquitectura se conoce como hidratación parcial o selectiva a través de directivas que se añaden a los componentes de UI para señalar como quieren ser renderizados. Astro aprovecha esta técnica para hidratar las islas automáticamente.
 
+\subsection{Integración de metodología Jamstack}
+% Revisar
+Astro se integra perfectamente con la metodología Jamstack, que se refiere a una arquitectura moderna para la construcción de aplicaciones web que combina una serie de tecnologías, incluyendo JavaScript, APIs, y sitios web estáticos.
+
+En la arquitectura Jamstack, los sitios web se crean como sitios estáticos que se sirven directamente desde una CDN (red de distribución de contenidos). Esto permite una carga rápida y una experiencia de usuario más fluida. Además, el uso de una CDN reduce significativamente la carga en el servidor y disminuye la posibilidad de errores.
+
+Astro se ajusta perfectamente a la metodología Jamstack, ya que proporciona una forma fácil de crear sitios web estáticos utilizando componentes de JavaScript y una sintaxis clara y concisa. Los componentes de Astro se pueden crear de forma independiente y luego se pueden utilizar en diferentes partes del sitio web, lo que hace que la creación de sitios web sea más modular y escalable.
+
+En resumen, Astro es una herramienta ideal para la creación de sitios web estáticos en la metodología Jamstack, ya que proporciona una forma fácil de crear componentes de JavaScript que pueden ser reutilizados en diferentes partes del sitio web. Esto hace que la creación de sitios web sea más modular y escalable, lo que es esencial para una arquitectura Jamstack exitosa.
+
 \subsection{Rutas de API}
 % Hablar de JAMstack pero se expande en diseño
 En este framework el mayor modelo de uso es de \verb|SSG|\cite{ssg}, aunque también permite realizar \verb|SSR|\cite{ssr}. Este segundo de normal haría que la aplicación empezara a renderizar cada ruta directamente desde el servidor por petición de esta, lo cual no concuerda con lo planteado anteriormente que se dijo que se usaría renderizado estático para generar la aplicación. Aqui es donde entra una de las nuevas características añadidas por Astro recientemente que es el \verb|renderizado hibrido|\cite{hibrid}, la cual permite definir si una ruta se debe prerenderizar de manera estática aunque se este utilizando el \verb|SSR|\cite{ssr}.
@@ -61,9 +71,20 @@ En este framework el mayor modelo de uso es de \verb|SSG|\cite{ssg}, aunque tamb
 \subsection{La sintexis MDX}
 De base Astro incluye soporte para archivos \verb|Markdown|\cite{md}, los cuales se usan comúnmente para crear contenido con mucho texto, como artículos de blog y documentación. Aunque estos presentán un problema de base y es que si se quiere dejar que el usuario escriba su contenido facilmente y facilitarle le reutilización de material o usar más funcionalidades de las que ya ofrece \verb|Markdown|\cite{md}. Es por esto que se ha obtado por usar unos de los plugins disponibles en \verb|Astro|\cite{astro}, \verb|MDX|\cite{mdx}, el cual combina lo ya existente de \verb|Markdown|\cite{md} con nuevas funcionalidades como usar sintaxis como \verb|JSX|\cite{jsx} o expresiones \verb|JS|\cite{js}.
 
-\subsection{La librería de autenticación astro-auth}
-Viendo si la librería esta deprecada.
-
 \section{El framework SolidJS}
+\verb|SolidJS|\cite{solid} ha sido el framework de UI que se ha usado junto a Astro para dar interactividad a la página generada por la aplicación. Este framework esta basado en componentes \verb|JSX|\cite{jsx} y su gran ventaja es su enfoque en la reactividad. Utiliza un sistema de reactividad para realizar un seguimiento eficiente de los cambios en el estado de la aplicación y actualizar solo los componentes afectados. Esto significa que cuando los datos cambian, solo se vuelven a renderizar los componentes relevantes, lo que resulta en un rendimiento óptimo y una experiencia de usuario fluida.
+
+SolidJS también ofrece una sintaxis concisa y expresiva para la definición de componentes. Los componentes se definen como funciones y se pueden utilizar hooks para gestionar el estado y los efectos secundarios. Además, SolidJS proporciona una capa de abstracción ligera sobre el \verb|DOM|\cite{dom}, lo que facilita la manipulación y actualización eficiente de los elementos de la interfaz de usuario. Todo esto sin el uso de un DOM virtual,como hacen otros lenguajes como \verb|React|\cite{react}, sino realizando pequeñas actualizaciones a nodos en el DOM real a través de la reactividad.
+
+Otra característica destacada de SolidJS es su tamaño compacto. El framework tiene un tamaño reducido en comparación con otros frameworks populares, lo que lo convierte en una opción muy atráctiva en este caso, ya que al trabajar con una página estática, la carga de este framework estará directamente en el lado del client, por lo que cuanto más se aligere la carga para este mejor.
 
 \section{La librería Tailwindcss}
+\verb|Tailwind CSS|\cite{tailwind} es un framework de diseño de interfaz de usuario altamente configurable y altamente utilitario. En lugar de proporcionar componentes predefinidos, Tailwind CSS se basa en un enfoque de clases utilitarias, lo que significa que ofrece una amplia gama de clases CSS que se pueden aplicar directamente a los elementos HTML para estilizarlos. Estas clases se utilizan para definir estilos, márgenes, espaciado, colores, tipografía y más.
+
+La principal ventaja de Tailwind CSS radica en su enfoque modular y altamente personalizable. En lugar de depender de un conjunto fijo de componentes, se pueden combinar y reutilizar las clases utilitarias para crear interfaces únicas y adaptables. Esto ofrece una gran flexibilidad y control sobre el diseño de la aplicación.
+
+Además, Tailwind CSS proporciona herramientas adicionales como utilidades de diseño responsivo, clases de animación, control de tamaño de contenedor y más. Estas herramientas facilitan el desarrollo de interfaces adaptables y con un alto rendimiento.
+
+En el TFG, Tailwind CSS se utilizó como el framework principal de estilos para construir la interfaz de usuario de la aplicación. Su enfoque utilitario y su amplia gama de clases facilitaron la personalización y adaptación de los estilos según los requisitos del proyecto.
+
+\section{El manejador de paquetes Pnpm}
