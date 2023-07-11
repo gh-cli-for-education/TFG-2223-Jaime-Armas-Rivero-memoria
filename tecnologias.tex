@@ -64,10 +64,6 @@ Astro se ajusta perfectamente a la metodología Jamstack, ya que proporciona una
 
 En resumen, Astro es una herramienta ideal para la creación de sitios web estáticos en la metodología Jamstack, ya que proporciona una forma fácil de crear componentes de JavaScript que pueden ser reutilizados en diferentes partes del sitio web. Esto hace que la creación de sitios web sea más modular y escalable, lo que es esencial para una arquitectura Jamstack exitosa.
 
-\subsection{Rutas de API}
-% Hablar de JAMstack pero se expande en diseño
-En este framework el mayor modelo de uso es de \verb|SSG|\cite{ssg}, aunque también permite realizar \verb|SSR|\cite{ssr}. Este segundo de normal haría que la aplicación empezara a renderizar cada ruta directamente desde el servidor por petición de esta, lo cual no concuerda con lo planteado anteriormente que se dijo que se usaría renderizado estático para generar la aplicación. Aqui es donde entra una de las nuevas características añadidas por Astro recientemente que es el \verb|renderizado hibrido|\cite{hibrid}, la cual permite definir si una ruta se debe prerenderizar de manera estática aunque se este utilizando el \verb|SSR|\cite{ssr}.
-
 \subsection{La sintexis MDX}
 De base Astro incluye soporte para archivos \verb|Markdown|\cite{md}, los cuales se usan comúnmente para crear contenido con mucho texto, como artículos de blog y documentación. Aunque estos presentán un problema de base y es que si se quiere dejar que el usuario escriba su contenido facilmente y facilitarle le reutilización de material o usar más funcionalidades de las que ya ofrece \verb|Markdown|\cite{md}. Es por esto que se ha obtado por usar unos de los plugins disponibles en \verb|Astro|\cite{astro}, \verb|MDX|\cite{mdx}, el cual combina lo ya existente de \verb|Markdown|\cite{md} con nuevas funcionalidades como usar sintaxis como \verb|JSX|\cite{jsx} o expresiones \verb|JS|\cite{js}.
 
@@ -88,3 +84,7 @@ Además, Tailwind CSS proporciona herramientas adicionales como utilidades de di
 En el TFG, Tailwind CSS se utilizó como el framework principal de estilos para construir la interfaz de usuario de la aplicación. Su enfoque utilitario y su amplia gama de clases facilitaron la personalización y adaptación de los estilos según los requisitos del proyecto.
 
 \section{El manejador de paquetes Pnpm}
+
+\verb|PNPM|\ref{pnpm} es un administrador de paquetes para proyectos de desarrollo de software en JavaScript. A diferencia de otros administradores, PNPM utiliza un enfoque de almacenamiento global y compartido para las dependencias, lo que evita la duplicación de paquetes y ahorra espacio en disco. Su característica destacada, por la cual se decantó por usarse en este proyecto, es el soporte de \verb|workspaces|\ref{workspaces}, que permite crear un monorepo, donde múltiples proyectos comparten dependencias comunes, lo que facilita la gestión y el mantenimiento.
+
+PNPM es especialmente útil en entornos de desarrollo que utilizan workspaces y monorepos, ya que reduce la necesidad de descargar y almacenar duplicados de dependencias compartidas. Esto agiliza el proceso de desarrollo al permitir la reutilización de dependencias entre proyectos y garantiza la coherencia de las versiones de las dependencias compartidas.
