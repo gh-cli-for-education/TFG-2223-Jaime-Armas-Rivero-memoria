@@ -110,7 +110,7 @@ añadir las variables de entorno necesarias para el proyecto. Un ejemplo del arc
 
 \subsection{Configurar las variables de entornos}
 
-Además para que la aplicación pueda obtener datos de la organización desde la API GraphQL de GitHub se tendrá que añadir a las variables de entorno del programa un token de acceso personal de GitHub \url{https://github.com/settings/tokens}, llamándolo \textbf{GITHUB\_SECRET}, en la figura\ref{fig:scopes} se muestra los \verb|scopes| que necesitará el token. La manera normal de añadir este secreto es a través de un \verb|.env| en el desarrollo y a la hora de hacer el despliegue de la aplicación habría que añadirlo a las variables de entorno del servicio. Por ejemplo, si se usa \verb|Vercel| \cite{vercel} como plataforma para el despliegue de la aplicación en la sección de \textit{Settings} hay un apartado llamado 
+Además para que la aplicación pueda obtener datos de la organización desde la API GraphQL de GitHub se tendrá que añadir a las variables de entorno del programa un token de acceso personal de GitHub \url{github-token}, llamándolo \textbf{GITHUB\_SECRET}, en la figura\ref{fig:scopes} se muestra los \verb|scopes| que necesitará el token. La manera normal de añadir este secreto es a través de un \verb|.env| en el desarrollo y a la hora de hacer el despliegue de la aplicación habría que añadirlo a las variables de entorno del servicio. Por ejemplo, si se usa \verb|Vercel| \cite{vercel} como plataforma para el despliegue de la aplicación en la sección de \textit{Settings} hay un apartado llamado 
 \textit{Environment Variables} en el que se pueden añadir variables de entornos a la aplicación. En la figura \ref{fig:vercelEnv} se puede ver de forma más detallada este menú.
 
 \begin{figure}[H]
@@ -257,7 +257,7 @@ Lo primero será crearse una cuenta de vercel, como tienen para usar GitHub como
 
 \begin{figure}
     \centering
-    \includegraphics{images/vercelConfig.png}
+    \includegraphics[scale=0.8]{images/vercelConfig.png}
     \caption{Panel de configuración del nuevo proyecto en Vercel}
     \label{fig:vercelConfig}
 \end{figure}
