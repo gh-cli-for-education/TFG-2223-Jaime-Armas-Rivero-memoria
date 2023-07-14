@@ -2,28 +2,26 @@ En este capítulo se explicara una guía detallada paso a paso de como crear y d
 
 \section{Instalar node y un instalador de paquetes de JS}
 
-Lo primero será descargar lo necesario para crear una aplicación que use javascript, en este caso, se deberá instalar node, con el siguiente link \url{https://nodejs.org/en/download} para Windows y Mac y en caso de usar una distribución de Linux el siguiente \url{https://nodejs.org/en/download/package-manager}. Esta instalación de normal ya trae incluido el instalor de paquetes \textbf{npm}, el cual se usará para los posteriores ejemplos. Si se desea instalar otro como pnmn\cite{pnpm} o yarn\cite{yarn}, habría que seguir la propia instalación de cada uno.
+Lo primero será descargar lo necesario para crear una aplicación que use javascript, en este caso, se deberá instalar \verb|node| \cite{nodejs}, con el siguiente link \cite{node-install} para Windows y Mac y en caso de usar una distribución de Linux el siguiente \cite{node-install-linux}. Esta instalación de normal ya trae incluido el instalor de paquetes npm, el cual se usará para los posteriores ejemplos. Si se desea instalar otro como \verb|pnmn| \cite{pnpm} o \verb|yarn| \cite{yarn}, habría que seguir la propia instalación de cada uno.
 
 \section{Crear un Classroom de GitHub}
 
-Esta aplicación esta centrada en la filosofía de enseñanza de GitHub, es por esto que lo primero que se deberá hacer es crear un GitHub Classroom, una herramienta para la enseñanza de GitHub. Para empezar se debera crear una cuenta de GitHub como se especifica aquí \url{https://docs.github.com/es/get-started/signing-up-for-github/signing-up-for-a-new-github-account}. Tras haber creado una cuenta de GitHub se podrá proceder a crear el Classroom, siguiendo la siguiente guía 
-
-\url{https://docs.github.com/es/education/manage-coursework-with-github-classroom/teach-with-github-classroom/manage-classrooms}.
+Esta aplicación esta centrada en la filosofía de enseñanza de GitHub, es por esto que lo primero que se deberá hacer es crear un GitHub Classroom, una herramienta para la enseñanza de GitHub. Para empezar se debera crear una cuenta de GitHub como se especifica aquí \cite{github-account}. Tras haber creado una cuenta de GitHub se podrá proceder a crear el Classroom, siguiendo la siguiente guía \cite{github-classroom-create}.
 
 \section{Empezar una LMS con {\tt AdAstra}: create-adastra-lms}
 
-Para empezar a usar el generador de LMS se deberá usar el comando \verb|npm create|\ref{npmCreate}, este comando esta presente en todo los instaladores de paquetes de JS y permite iniciar un proyecto, opcionalmente pasándole el paquete que se quiere usar para la creación. En este caso, se ha creado un paquete para que el usuario pueda iniciar un proyecto con AdAstra con nombre \textbf{create-adastra-lms}. Hay que destacar que en Windows debido a que la plantilla del proyecto usa links simbólicos, se deberá usar un terminal con permisos de administrador para ejecutar el comando. Para poder usar este paquete como inicializador se deberá usar el siguiente comando:
+Para empezar a usar el generador de LMS se deberá usar el comando \verb|npm create |(Figura \ref{fig:create-adastra}), este comando esta presente en todo los instaladores de paquetes de JS y permite iniciar un proyecto, opcionalmente pasándole el paquete que se quiere usar para la creación. En este caso, se ha creado un paquete para que el usuario pueda iniciar un proyecto con AdAstra con nombre \textbf{create-adastra-lms}. Hay que destacar que en Windows debido a que la plantilla del proyecto usa links simbólicos, se deberá usar un terminal con permisos de administrador para ejecutar el comando. Para poder usar este paquete como inicializador se deberá usar el siguiente comando:
 \begin{verbatim}
     npm create adastra-lms@latest
 \end{verbatim}
 
-Tras llamar a este comando se iniciará una aplicación de \verb|CLI|\cite{cli}, que preguntará sobre las opciones a querer usar. En este caso, lo que habrá que rellenar será lo siguiente:
+Tras llamar a este comando se iniciará una aplicación de CLI, que preguntará sobre las opciones a querer usar. En este caso, lo que habrá que rellenar será lo siguiente:
 
 \begin{enumerate}
     \item Directorio de la aplicación.
     \item Plantilla a usar. En este caso, solo esta la básica por lo que se deberá usar esa.
     \item Si se quiere instalar las dependencias.
-    \item Si se quiere crear un repositorio de \verb|git|\ref{git}.
+    \item Si se quiere crear un repositorio de \verb|git|\cite{git}.
 \end{enumerate}
 
 En la figura \ref{fig:create-adastra} se  muestra un ejemplo de este proceso.
@@ -51,7 +49,7 @@ añadir las variables de entorno necesarias para el proyecto. Un ejemplo del arc
 
 \subsection{Archivo de configuración: {\tt adastra.config.mjs}}
 
- Para esto habrá que modificar el archivo \textbf{adastra.config.js} que se ha creado automáticamente. Dentro de este se podrán encontrar dos objetos, el primero llamado \textbf{tailwindConfig} que se puede ver en la figura \ref{fig:adastraConfig} en la linea 1, el cual permitirá cambiar configuraciones relacionadas con el tema de la página que se creará como los colores primarios y secundarios, teniendo cada uno su opción para el estilo oscuro de la página, o incluso el tamaño que asignar al espaciado mínimo o la altura del navbar, etc. Esto funciona con la configuración de tailwindcss como base, en la documentación de tailwindcss (\url{https://tailwindcss.com/docs/theme}) se puede encontrar más información sobre esto. Y un segundo, llamado \textbf{organizationInfo} que se puede ver en la figura \ref{fig:adastraConfig} en la linea 24, dentro de este habrá que aportar información relacionada con la organización. Entre ellos los datos más importantes a introducir serían los siguientes:
+ Para esto habrá que modificar el archivo \textbf{adastra.config.js} que se ha creado automáticamente. Dentro de este se podrán encontrar dos objetos, el primero llamado \textbf{tailwindConfig} que se puede ver en la figura \ref{fig:adastraConfig} en la linea 1, el cual permitirá cambiar configuraciones relacionadas con el tema de la página que se creará como los colores primarios y secundarios, teniendo cada uno su opción para el estilo oscuro de la página, o incluso el tamaño que asignar al espaciado mínimo o la altura del navbar, etc. Esto funciona con la configuración de tailwindcss como base, en la documentación de tailwindcss (\cite{tailwind-theme}) se puede encontrar más información sobre esto. Y un segundo, llamado \textbf{organizationInfo} que se puede ver en la figura \ref{fig:adastraConfig} en la linea 24, dentro de este habrá que aportar información relacionada con la organización. Entre ellos los datos más importantes a introducir serían los siguientes:
 
  \begin{itemize}
     \item \textbf{pageTitle:} Titulo que aparecerá en la aplicación
@@ -112,7 +110,7 @@ añadir las variables de entorno necesarias para el proyecto. Un ejemplo del arc
 
 \subsection{Configurar las variables de entornos}
 
-Además para que la aplicación pueda obtener datos de la organización desde la API GraphQL de GitHub se tendrá que añadir a las variables de entorno del programa un token de acceso personal de GitHub \url{https://github.com/settings/tokens}, llamándolo \textbf{GITHUB\_SECRET}, en la figura\ref{fig:scopes} se muestra los \verb|scopes| que necesitará el token. La manera normal de añadir este secreto es a través de un \verb|.env| en el desarrollo y a la hora de hacer el despliegue de la aplicación habría que añadirlo a las variables de entorno del servicio. Por ejemplo, si se usa \verb|Vercel|\cite{vercel} como plataforma para el despliegue de la aplicación en la sección de \textit{Settings} hay un apartado llamado 
+Además para que la aplicación pueda obtener datos de la organización desde la API GraphQL de GitHub se tendrá que añadir a las variables de entorno del programa un token de acceso personal de GitHub \url{https://github.com/settings/tokens}, llamándolo \textbf{GITHUB\_SECRET}, en la figura\ref{fig:scopes} se muestra los \verb|scopes| que necesitará el token. La manera normal de añadir este secreto es a través de un \verb|.env| en el desarrollo y a la hora de hacer el despliegue de la aplicación habría que añadirlo a las variables de entorno del servicio. Por ejemplo, si se usa \verb|Vercel| \cite{vercel} como plataforma para el despliegue de la aplicación en la sección de \textit{Settings} hay un apartado llamado 
 \textit{Environment Variables} en el que se pueden añadir variables de entornos a la aplicación. En la figura \ref{fig:vercelEnv} se puede ver de forma más detallada este menú.
 
 \begin{figure}[H]
@@ -136,7 +134,7 @@ Ahora que ya está configurado podremos iniciar el proyecto localmente con el co
 
 \section{Añadir contenido al LMS}
 
-En cuanto al contenido habrá que diferenciar en cuatro tipos, elementos generales que se comparten entre todos los contenidos como imagenes, videos, archivos, etc; prácticas(labs), temarios(subjects) y clases(classes).
+En cuanto al contenido habrá que diferenciar en cuatro tipos, elementos generales que se comparten entre todos los contenidos como imágenes, vídeos, archivos, etc; prácticas(\verb|labs|), temarios(\verb|subjects|) y clases(\verb|classes|).
 
 \subsection{Contenido general: {\tt public}}
 
@@ -149,7 +147,7 @@ El primer tipo de contenido, como se dijo anteriormente están relacionados con 
 
 \subsection{Añadir un temario}
 
-El primer contenido que deberá ser escrito por el usuario directamente y que realizará un cambio explicito en la aplicación serán los temarios, que están ubicados en la carpeta \textbf{subjects}. Para añadir una nueva entrada se deberá crear un archivo de tipo \verb|Markdown|\ref{MD}. Se deberá tener en cuenta que la aplicación usa un sistema de navegación automático basado en el nombre de los archivos, por esto se deberá añadir un numero antes del nombre del archivo. Un ejemplo es este:
+El primer contenido que deberá ser escrito por el usuario directamente y que realizará un cambio explicito en la aplicación serán los temarios, que están ubicados en la carpeta \textbf{subjects}. Para añadir una nueva entrada se deberá crear un archivo de tipo \verb|Markdown| \cite{md}. Se deberá tener en cuenta que la aplicación usa un sistema de navegación automático basado en el nombre de los archivos, por esto se deberá añadir un numero antes del nombre del archivo. Un ejemplo es este:
 
 \begin{verbatim}
     test-subject.md -> 1-test-subject.md
@@ -200,7 +198,7 @@ La explicación de cada uno es la siguiente:
     \item \textbf{type:} En las prácticas se deberá poner siempre \verb|lab|.
     \item \textbf{title:} Será el título que tendrá esa entrada al generarse.
     \item \textbf{key:} Clave con la que se identificará al archivo en el proyecto.
-    \item \textbf{templateKey:} Clave de la template del lab en la organización de GitHub creado por el Classroom de GitHub que se relacionará con este archivo.
+    \item \textbf{templateKey:} Clave de la template del lab en la organización de GitHub creado por el Classroom de GitHub que se relacionará con este archivo, en este caso sería el nombre del repositorio de la template.
 \end{itemize}
 
 \subsection{Añadir una clase}
@@ -232,15 +230,15 @@ La explicación de cada uno es la siguiente:
 
 Para hacer un despliegue se deberá escoger donde querremos que se haga, pero para este ejemplo usaremos el hosting de vercel como ejemplo, aunque el resto de casos deberá ser parecido.
 
-Lo primeró será crearse una cuenta de vercel, como tienen para usar GitHub como cuenta usaremos está opción para simplificar el proceso. Tras esto se nos abrirá un panel como el de la figura \ref{fig:vercelPanel}, dentro de este seleccionaremos \textit{Add New -> Project}. Esto nos abrirá una nueva página como la figura \ref{fig:vercelNewProject}, en este caso vercel funciona usando los repositorios de GitHub del usuario como posibles proyectos, deberemos seleccionar el proyecto que queramos desplegar. Esto abrirá un panel para configurar el proyecto como el de la figura \ref{fig:vercelConfig}, deberemos introducir los siguientes datos:
+Lo primero será crearse una cuenta de vercel, como tienen para usar GitHub como cuenta usaremos está opción para simplificar el proceso. Tras esto se nos abrirá un panel como el de la figura \ref{fig:vercelPanel}, dentro de este seleccionaremos \textit{Add New -> Project}. Esto nos abrirá una nueva página como la figura \ref{fig:vercelNewProject}, en este caso vercel funciona usando los repositorios de GitHub del usuario como posibles proyectos, deberemos seleccionar el proyecto que queramos desplegar. Esto abrirá un panel para configurar el proyecto como el de la figura \ref{fig:vercelConfig}, deberemos introducir los siguientes datos:
 
 \begin{itemize}
     \item \textbf{Project Name:} El nombre que queremos usar en vercel.
-    \item \textbf{Build Command:} Será el comando , el comando a usar será 
+    \item \textbf{Build Command:} Será el comando que sirva para construir la app: 
         \begin{verbatim}
-            astro build --root "./.adastra"
+            npm run dev
         \end{verbatim}
-    \item \textbf{Install Command:}
+    \item \textbf{Enviroment Variables:} Aquí se deberá añadir la variable de entorno \verb|GITHUB_SECRET| con el token de GitHub creado anteriormente.
 \end{itemize}
 
 \begin{figure}

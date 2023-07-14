@@ -27,7 +27,29 @@ En este caso el contenido de cada carpeta está pensado para que se use de la si
 \end{itemize}
 
 \subsection{El sistema de navegación en función de la rutas}
-Uno de los sistemas que más fácilmente se puede ver es que a lo largo del proyecto es que a la izquierda de la web producidad se encontraría una barra de navegación que de forma automática.
+Uno de los sistemas que más fácilmente se puede ver es que a lo largo del proyecto es que a la izquierda de la web producida se encontraría una barra de navegación que de forma automática. Este sistema se divide en tres partes \verb|tabs|(pestañas), \verb|sections|(secciones) y \verb|entries|(entradas). De base la aplicación está diseñada para que tenga dos \verb|tabs|, en la que cada una tiene múltiples \verb|sections| con uno o más \verb|entries| por cada una. En la figura \ref{fig:navigationSystem} se pueden ver como quedarían las diferente partes del sistema de navegación en el diseño final.
+
+\begin{figure}
+    \centering
+    \includegraphics{images/navigationSystem.png}
+    \caption{Barra lateral con las diferentes partes del sistema de navegación}
+    \label{fig:navigationSystem}
+\end{figure}
+
+Con esto nos encontramos con un problema y es que de base como se crean las páginas en función de la ruta que tenga, terminaría por ordenar cada parte de la navegación alfabéticamente. Esto le quita flexibilidad a la aplicación, por lo que se decide que el usuario deberá añadir en cada parte de la ruta del archivo un número que simboliza el orden que deba tener usando \verb|-| como separador. Es decir unas rutas como las siguientes:
+
+\begin{verbatim}
+    virtual/class/prueba.md
+    virtual/class/test.md
+\end{verbatim}
+
+Tendrían un orden alfabético pero al añadir los números para así ordenar quedarían como los siguientes:
+
+\begin{verbatim}
+    1-virtual/1-class/1-test.md
+    1-virtual/1-class/2-prueba.md
+\end{verbatim}
+
 
 \subsection{El fichero de Configuración {\tt adastra.config.mjs}} \label{diseño:data}
 Uno de los puntos claves al crear está template fue buscar la mayor flexibilidad posible a la hora de poder modificar los contenidos por el usuario, pero sin complicar demasiado el proceso. Es por eso que en un punto se decidió crear un archivo de configuración en que poder especificar ciertos cambios sin tener que modificar el código directamente el usuario.

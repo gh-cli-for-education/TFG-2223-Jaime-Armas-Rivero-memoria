@@ -2,11 +2,11 @@ El objetivo de este capítulo es demostrar las partes importantes o de interés 
 
 \section{El monorepo del proyecto}
 
-Una de las cosas fundamentales a la hora de crear este proyecto era conseguir dividir el proyecto en varias secciones sin dificultar el trabajar con ellas a la vez. Es por esto que se decidió usar un monorepo para guardar el proyecto y aprovechar de ciertas herramientas para facilitar su uso. Como herramienta principal para gestionar el monorepo se decidió usar \verb|turborepo|\cite{turborepo}, debido a que es uno de las más populares y de los que más rendimiento tienen a la hora de construir las aplicaciones. Además de usar turborepo, se decidió aprovechar una de las opciones que trae el gestor de paquetes \verb|pnpm|\cite{pnpm}, los \verb|worspaces|\cite{pnpm-workspaces}, la cual permite unir varios proyectos dentro del mismo repositorio y compartir las dependencias entre ellos. Por último, se utilizó la herramienta \verb|changesets|\cite{changesets} para el control de versiones de los diferentes paquetes y proyectos del monorepo.
+Una de las cosas fundamentales a la hora de crear este proyecto era conseguir dividir el proyecto en varias secciones sin dificultar el trabajar con ellas a la vez. Es por esto que se decidió usar un monorepo para guardar el proyecto y aprovechar de ciertas herramientas para facilitar su uso. Como herramienta principal para gestionar el monorepo se decidió usar \verb|turborepo| \cite{turborepo}, debido a que es uno de las más populares y de los que más rendimiento tienen a la hora de construir las aplicaciones. Además de usar turborepo, se decidió aprovechar una de las opciones que trae el gestor de paquetes \verb|pnpm| \cite{pnpm}, los \verb|worspaces| \cite{pnpm-workspaces}, la cual permite unir varios proyectos dentro del mismo repositorio y compartir las dependencias entre ellos. Por último, se utilizó la herramienta \verb|changesets| \cite{changesets} para el control de versiones de los diferentes paquetes y proyectos del monorepo.
 
 \section{El inicializador de {\tt adastra}}
 
-Como se dijo anteriormente en el apartado de diseño se ha creado un paquete llamado \verb|create-adastra-lms|, que sirve como punto de inicio para crear un proyecto con AdAstra. La función principal de este paquete se muestra en la figura \ref{fig:adastraCreateMain}. Lo primero que se realiza es la extracción de los argumentos pasados al programa, para luego crear un objeto \verb|context|, que proporciona los datos que necesitará la aplicación, en función de estos argumentos. En caso de que se haya pasado como argumento una \textit{flag} de ayuda, como \verb|-h| o \verb|--help|, se mostrará el menú de ayuda como resultado, se puede ver en la figura \ref{fig:adastraCreateHelp}. Para finalizar, se ejecutarán los diferentes pasos de la ejecución, encapsulados dentro de un array, que en este caso se tratan de diferentes funciones asíncronas que se llamarán una después de otra. Para facilitar el proceso de creación de este paquete se ha usado, una librería del framework de \verb|Astro|\cite{astro} llamada \verb|@astrojs/cli-kit|\cite{astro-cli} que suministra de diferentes utilidades que sirven para facilitar la creación de un programa de cli, como la petición de un prompt o las personalización de los mensajes. 
+Como se dijo anteriormente en el apartado de diseño se ha creado un paquete llamado \verb|create-adastra-lms|, que sirve como punto de inicio para crear un proyecto con AdAstra. La función principal de este paquete se muestra en la figura \ref{fig:adastraCreateMain}. Lo primero que se realiza es la extracción de los argumentos pasados al programa, para luego crear un objeto \verb|context|, que proporciona los datos que necesitará la aplicación, en función de estos argumentos. En caso de que se haya pasado como argumento una \textit{flag} de ayuda, como \verb|-h| o \verb|--help|, se mostrará el menú de ayuda como resultado, se puede ver en la figura \ref{fig:adastraCreateHelp}. Para finalizar, se ejecutarán los diferentes pasos de la ejecución, encapsulados dentro de un array, que en este caso se tratan de diferentes funciones asíncronas que se llamarán una después de otra. Para facilitar el proceso de creación de este paquete se ha usado, una librería del framework de \verb|Astro| \cite{astro} llamada \verb|@astrojs/cli-kit| \cite{astro-cli} que suministra de diferentes utilidades que sirven para facilitar la creación de un programa de cli, como la petición de un prompt o las personalización de los mensajes. 
 
 \begin{figure}
     \begin{lstlisting}[language=Javascript]
@@ -381,130 +381,381 @@ En la figura \ref{fig:adastraCreateGit} se puede visualizar el código de este p
     \label{fig:adastraCreateGit}
 \end{figure}
 
+\subsection{El paso {\tt next}}
 
+El último paso es relativamente simple y es que solo se encarga informar al usuario de que el proceso ha terminado y mostrar los posibles paso a seguir:
+\begin{verbatim}
+    AdAstra LMS Created. Explore your project!
 
+    Enter your project directory using cd ./name
+    Run npm run dev to start the dev server. CTRL+C to stop.
+\end{verbatim}
 
-% \begin{figure}[H]
-%     \centering
-%     \makebox[\textwidth][c]{\includegraphics[width=\textwidth]{images/scopes.png}}
-%     \caption{Scopes para el token GITHUB\_SECRET}
-%     \label{fig:scopes}
-% \end{figure}
+En la figura \ref{fig:adastraCreateNext} se puede ver el código de este paso.
 
+\begin{figure}
+    \begin{lstlisting}[language=Javascript]
+        export const nextSteps = async ({
+          projectDir,
+          devCmd,
+        }: {
+          projectDir: string;
+          devCmd: string;
+        }) => {
+          const max = stdout.columns;
+          const prefix = max < 80 ? " " : " ".repeat(9);
+          await sleep(200);
+          log(
+            `\n ${color.bgCyan(` ${color.black("next")} `)}  ${color.bold(
+              "AdAstra LMS Created. Explore your project!"
+            )}`
+          );
+        
+          await sleep(100);
+          if (projectDir !== "") {
+            projectDir = projectDir.includes(" ")
+              ? `"./${projectDir}"`
+              : `./${projectDir}`;
+            const enter = [
+              `\n${prefix}Enter your project directory using`,
+              color.cyan(`cd ${projectDir}`, ""),
+            ];
+            const len = enter[0].length + stripAnsi(enter[1]).length;
+            log(enter.join(len > max ? "\n" + prefix : " "));
+          }
+          log(
+            `${prefix}Run ${color.cyan(devCmd)} to start the dev server. ${color.cyan(
+              "CTRL+C"
+            )} to stop.`
+          );
+          await sleep(100);
+        };
+        
+        export const next = async (context: Context) => {
+          let projectDir = path.relative(process.cwd(), context.cwd);
+          const devCmd =
+            context.pkgManager === "npm" ? "npm run dev" : `${context.pkgManager} dev`;
+        
+          await nextSteps({ projectDir, devCmd });
+        };
+    \end{lstlisting}
+    \caption{Paso next de create-adastra-lms}
+    \label{fig:adastraCreateNext}
+\end{figure}
 
-% \section{El controlador}
-% Como se ha comentado en capítulos anteriores, la mayoría de comandos se aprovecha de los comandos ya proporcionados por \verb|gh|. Como es el caso de \verb|gh edu install|. Después de determinar si la extensión es \emph{first-party} o \emph{third-party} (extensión independiente de la organización \verb|gh-cli-for-education|), se obtiene la dirección del repositorio de la extensión, se invoca \verb|gh extension install| y se añade a \verb|data.json|.
+\section{La template del proyecto}
 
-% \begin{figure}[H]
-%     \centering
-%     \makebox[\textwidth][c]{\includegraphics[width=\textwidth]{images/installCode.png}}
-%     \caption{Implementación. Código para instalar extensiones}
-%     \label{fig:installCode}
-% \end{figure}
+Como se explicó en la sección anterior, tras descargar la \textit{template} a usar para el proyecto en la carpeta \verb|.adastra|, la unica manera de interactuar con el proyecto de Astro alojado en esa carpeta es a través de las carpetas con links simbólicos que son \verb|classes|, \verb|labs| y \verb|subjects|, y el archivo de configuración \verb|adastra.config.mjs|. En los siguientes apartados entraremos más en detalle de como se ha implementado el uso de estos, además de algunas de las cosas mencionadas en el diseño de la template.
 
-% En la figura \ref{fig:installCode} vemos que después de instalar la extensión, hacemos una llamada \emph{API REST} para saber cuál es la rama por defecto. Al tener esta información, podemos buscar cuál es el \gls{hash} del último \emph{commit}, para actualizar el campo \verb|lastCommit|.
+\subsection{Creación de contenido por Markdown}
 
-% \emph{Nota: utils.print() es una función muy simple para determinar si el mensaje debería imprimirse o no, dependiendo del valor del flag --quiet}.
-
-% Para que \verb|commander| acepte únicamente las extensiones instaladas, se ha escrito el siguiente código (figura \ref{fig:addThirdParty}):
-
-% \begin{figure}[H]
-%     \centering
-%     \makebox[\textwidth][c]{\includegraphics[width=\textwidth]{images/addThirdParty.png}}
-%     \caption{Implementación. Controlador. Añadir extensiones third-party}
-%     \label{fig:addThirdParty}
-% \end{figure}
-
-% Todas las extensiones, que se hayan instalado en el sistema a través de \verb|gh-edu|, se añadirán como comandos disponibles. También se activa la posibilidad de usar opciones desconocidas y se delega su gestión al subcomando en cuestión. Así mismo se desactiva la ayuda y en el manejo de errores solo se comprueba que el comando haya sido ejecutado, pues naturalmente de estas tareas se tiene que ocupar cada extensión.
-
-% Aquí se deja ver la madurez del programa al permitirnos utilizar comandos desconocidos, función que, al momento de escribir estas líneas, todavía no es posible con \href{https://github.com/spf13/cobra/issues/739}{cobra}.
-
-% \subsection{Manejo del único punto de información: data.json} \label{impl:data.json}
-% Lo primero que el programa hace al ser ejecutado, es comprobar la validez del fichero. La siguiente figura (\ref{fig:dataGraph}) muestra los estados por los que se pasa para lograrlo.
-
-% \begin{figure}[H]
-%     \centering
-%     \makebox[\textwidth][c]{\includegraphics[width=0.5\textwidth]{images/createConfig.png}}
-%     \caption{Obtención del archivo data.json}
-%     \label{fig:dataGraph}
-% \end{figure}
-
-% Es primer paso es comprobar si se encuentra en la localización correspondiente (\verb|~/.config/gh-edu/data.json|). De no ser así, se intenta conseguirlo desde el repositorio \verb|gh-edu-profile|. Como última instancia se crea un fichero nuevo, partiendo de una plantilla que contiene todos los campos necesarios.
-
-% Sabiendo que el fichero está disponible, pasamos a validar su contenido. Primero se \glspl{deserialization} para comprobar que es un fichero JSON válido. Acto seguido pasamos a realizar una comprobación simple de los campos, comprobando que estén en el fichero y que las \glspl{regex} sean válidas.
-
-% \begin{figure}[H]
-%     \centering
-%     \makebox[\textwidth][c]{\includegraphics[width=\textwidth]{images/comprobacion.png}}
-%     \caption{Implementación. data.json. Comprobamos que los campos son válidos}
-%     \label{fig:comprobar}
-% \end{figure}
-
-% Cada vez que se quiera actualizar la información, se actualiza la variable donde se cargó el fichero, se \glspl{serialization} y se escribe de vuelta al fichero.
-
-% \section{Extensión minimalista: {\tt gh-edu-view}}\label{sec:gh-edu-view-implementation}
-
-% A la hora de escribir una extensión para \verb|gh-edu| en \verb|JS|, se procede de la misma forma que con una extensión \verb|gh|.
-% Deben crearse los ficheros \verb|gh-edu-view/gh-edu-view| (script bash) y \verb|gh-edu-view/gh-edu-view.js| (programa \verb|JS|).
-
-% Para intentar conseguir los identificadores relacionados a los alumnos, con nada más que la información proporcionada con GitHub, no nos queda otra opción que buscar en todos los campos, donde dicha información podría estar disponible, y devolver un \emph{array} con todos los posibles resultados.
-
-% \begin{figure}[H]
-%     \centering
-%     \makebox[\textwidth][c]{\includegraphics[width=0.5\textwidth]{images/posibleID.png}}
-%     \caption{Implementación. gh-edu-view. Obtención de posibles identificadores}
-%     \label{fig:viewId}
-% \end{figure}
-
-% Toda la información proporcionada por el comando \verb|members| se puede conseguir con una simple petición en GraphQL (figura \ref{fig:viewQuery}).
-
-% \begin{figure}[H]
-%     \centering
-%     \makebox[\textwidth][c]{\includegraphics[width=0.5\textwidth]{images/view-query.png}}
-%     \caption{Implementación. gh-edu-view. Petición para conseguir diversos campos de cada alumno}
-%     \label{fig:viewQuery}
-% \end{figure}
-
-% \section{{La librería \tt shelljs} y el manejo de E/S: {\tt gh-edu-data}} \label{impl:gh-edu-data}
-% Uno de los defectos de \verb|shelljs| que ya se ha comentado en el apartado de \textbf{Tecnologías} (\ref{shelljs}) es como no permite el uso de \verb|STDIN| o tuberías. Algo importante en este proyecto, pero especialmente en esta extensión por el uso avanzado de \verb|fzf| y \verb|jq|. Estas dos tecnologías, a pesar de ser completamente independientes la una a la otra, pueden trabajar conjuntamente gracias a su diseño flexible y minimalista a través de tuberías, haciendo posible la previsualización dinámica de los elementos en el comando \verb|log| (figura \ref{fig:interface-log})
-
-% Este comportamiento es requerido, ya que no es posible pasar un objeto \verb|JS| o un \emph{array} al input de un programa que todavía no ha sido ejecutado. Solo se puede usar cadenas de texto. Lo ideal es ejecutar el comando, y de forma asíncrona ir procesando la estructura de datos, enviando cadenas de texto, como se hace en \verb|gh-edu-plagiarism| (gracias a \href{https://pkg.go.dev/os/exec@go1.18.3#Cmd.StdinPipe}{cmd.StdInPipe}).
-
-% Hasta que la \href{https://github.com/shelljs/shelljs/issues/424}{incidencia 424} no sea resuelta, se ha tenido que realizar una solución alternativa utilizando ficheros temporales. La idea consiste en formatear el objeto o \verb|array| y escribir el resultado en un fichero, de esta forma podemos leer el fichero y transmitir esa información por medio de una tubería a otro comando en el mismo momento en el que se ejecuta el comando.
-
-% \section{Concurrencia con Go y CSP: {\tt gh-edu-plagiarism}} \label{diseño:gh-edu-plagiarism}
-% A diferencia del resto de extensiones \verb|plagiarism| está implementado en Go. Uno de los motivos del cambio de lenguaje es demostrar como se puede desarrollar extensiones en cualquier lenguaje sin muchas dificultades.
-
-% También, como se comentó en \textbf{Tecnologías} (\ref{go}) este programa es altamente concurrente y paralelo. Go cuenta con un modelo de concurrencia bastante particular basado en el trabajo teórico de Tony Hoare \emph{Communicating Sequential processes} (CSP) \cite{hoare1985communicating}.
-
-% Para entender las explicaciones de esta sección es necesario conocer dos conceptos: las gorutinas y los canales. Las gorutinas son \glspl{corrutine} independientes que se ejecutan en hilos verdes (\emph{green threads}), los cuales son hilos emulados generados en tiempo de ejecución, estos hilos se multiplexan a hilos reales del procesador a través del \verb|Go scheduler|, que determina cuanto tiempo debe estar cada hilo verde consumiendo CPU.
-
-% Los canales son la estructura de datos que nos permite enviar información de una gorutina a otra y también sirven de elemento sincronizador, cuando se envía un elemento, la gorutina no continua hasta que el otro lado (el emisor) haya recibido la información y viceversa.
-
-% La explicación de la figura \ref{fig:plagiarism} en términos de código sería la siguiente:\\
-% Cada bloque dentro del módulo \verb|Concurrent| es una gorutina que se ejecuta de forma independiente y cada flecha pertenece a un canal, que sincroniza y a su vez transmite información de una gorutina a otra.
-
-% La gorutina \verb|clone| va creando a su vez gorutinas a medida que más repositorios se vayan filtrando. Debido a que las gorutinas apenas consumen recursos, está bien eliminar y crear tantas como queramos. No obstante, como estamos realizando programación paralela, tenemos que tener cuidado de que no haya muchas más gorutinas corriendo que núcleos disponibles en el procesador, pues entonces conseguiríamos el efecto contrario al deseado, ralentizando toda la aplicación debido al constante cambio de contexto entre hilos. Para limitar la creación de gorutinas al número de núcleos disponibles se ha utilizado un semáforo. Un semáforo es una variable o estructura de datos que permite una cantidad arbitraria de procesos. Un semáforo binario es a efectos prácticos un \verb|lock| o \verb|mutex|.
-
-% \begin{figure}[H]
-%     \centering
-%     \includegraphics[width=0.5\linewidth]{images/concurrency-go.png}
-%     \caption{Paralelismo limitado con un sémaforo}
-%     \label{fig:concurrencyGo}
-% \end{figure}
-% El código que lo implementa (figura \ref{fig:concurrencyGo}) ha sido simplificado para explicar el funcionamiento del paralelismo y el semáforo.
-
-% El canal \verb|sem| es un canal con buffer, esto quiere decir que no para el flujo (no sincroniza) hasta que el buffer se llene. El tamaño de dicho buffer es \verb|runtime.NumCPU()| que retorna el número de núcleos disponibles al ejecutar el programa. En cada iteración del bucle \verb|repo| contiene un nuevo repositorio proveniente del módulo \verb|Filter| y enviamos un elemento al canal \verb|sem|, el elemento en cuestión es irrelevante, estamos usando el canal por sus propiedades de sincronización, no para la transferencia de datos. Después ejecutamos una gorutina anónima que se encarga de clonar el repositorio, cuando termine escucha y descarta del canal \verb|sem|.
-
-% De esta forma, si \verb|sem| está lleno significa que ya hay tantos procesos ejecutándose como núcleos hay disponibles, por lo que el programa queda en espera hasta que quede un hueco en el semáforo.
-
-% % Esto va en diseño. Otro de los motivos por los cuales se eligió Go es que a la hora de diseñar la extensión me percate de que el programa sería altamente concurrente y paralelo. Uno de los motivos por los cuales se creó Go fue para poder aprovechar al máximo los varios núcleos que suele tener cualquier dispositivo moderno. Así, las instituciones educativas que reutilizan la misma organización para una misma asignatura a lo largo de varios años, y por ende tienen muchos repositorios y miembros, no verán su experiencia lastrada. También se tuvo en cuenta que Go tiene soporte de primera clase con \verb|gh| y uno de los casos de uso más comunes del lenguaje son aplicaciones CLI.
-
-% \begin{figure}[H]
-%     \centering
-%     \includegraphics[width=\linewidth]{images/go-code.png}
-%     \caption{Código general de plagiarism}
-%     \label{fig:goCode}
-% \end{figure}
-
+Para poder explicar como funciona este sistema lo primero que habrá que destacar son tres funciones importantes de Astro.
+\begin{itemize}
+    \item Astro funciona a través de ficheros \verb|.astro|, cuya \verb|sintaxis|\cite{astro-syntax} es una combinación de Html puro con Jsx, en la que se podrá insertar código de javascript entre dos \verb|---| al principio del archivo, para a posteriori poder usar lo creado con javascript dentro del html, en la figura \ref{fig:astroSyntax} se puede ver un ejemplo de esta sintaxis.
+    \item Además Astro presenta una característica especial para crear el \verb|routing|\cite{astro-routing} de la aplicación, en la que se considerará un página a construir aquel archivo \verb|.astro| que se encuentre dentro de la carpeta \verb|src/pages| de un proyecto de astro y se usará su ruta relativa respecto a esa carpeta como ruta para la url. Teniendo esto en cuenta, una de las características que tiene este sistema de \verb|file-based routing| son las rutas dinámicas en las que si un archivo presenta un nombre como por ejemplo este \verb|[id].astro|, se crearán múltiples páginas con la misma estructura pero que variaran en función de lo que equivalga a la \verb|id| en la url. Eso si teniendo en cuenta que la aplicación que queremos crear debe ser estática se le deberá pasar a Astro las rutas que queramos que se creen a la hora de construir la aplicación, para esto se deberá exportar una función llamada \verb|getStaticPaths| que devolverá un lista de los parámetros a usar. Además si se añade \verb|...| delante del nombre del parámetro en el nombre del archivo, se capturan también rutas de mayor profundidad. En la figura \ref{fig:astroDynamicRoutes} se puede ver un ejemplo de las rutas dinámicas.
+    \item Por último sería su sistema de \verb|colecciones de contenido|\cite{astro-collections}, el cual permite añadir colecciones de archivos Markdown, creando carpetas dentro de la ubicación \verb|src/content|, con el añadido de poder configurar y agregar tipos a las colecciones, y es que Astro extiende el funcionamiento de Markdown permitiendo añadir un frontmatter, zona delimitada por dos lineas con los símbolos \verb|---| en la parte superior del archivo con un formato parecido al de los archivo \verb|Yaml|\cite{yaml}, dentro de este se podrá agregar parámetros que Astro podrá leer y usarse en el código. Un ejemplo de un fromatter sería el de la figura \ref{fig:astroFrontmatter}.
+\end{itemize}
  
+
+\begin{figure}
+    \begin{lstlisting}[language=Javascript]
+        ---
+        const name = "Astro";
+        ---
+        <div>
+          <h1>Hello {name}!</h1>  <!-- Outputs <h1>Hello Astro!</h1> -->
+        </div>
+    \end{lstlisting}
+    \caption{Ejemplo de la sintaxis de Astro}
+    \label{fig:astroSyntax}
+\end{figure}
+
+\begin{figure}
+    \begin{lstlisting}[language=Javascript]
+        ---
+        export function getStaticPaths() {
+          return [
+            {params: {dog: 'clifford'}},
+            {params: {dog: 'rover'}},
+            {params: {dog: 'special/spot'}},
+          ];
+        }
+        
+        const { dog } = Astro.params;
+        ---
+        <div>Good dog, {dog.replace("/", " ")}!</div>
+    \end{lstlisting}
+    \caption{Ejemplo de las rutas dinámicas de Astro}
+    \label{fig:astroDynamicRoutes}
+\end{figure}
+
+\begin{figure}
+    \begin{lstlisting}[language=Javascript]
+        ---
+        title: "Test 1"
+        relatedIds:
+        - 1
+        - 2
+        ---
+    \end{lstlisting}
+    \caption{Ejemplo del frontmatter de los archivos Markdown en Astro}
+    \label{fig:astroFrontmatter}
+\end{figure}
+
+Con estás funcionalidades básicas de Astro explicadas podemos pasar a ver como se han usado para crear el sistema de creación de contenido por Markdown. Lo primero que se hizo fue crear una nueva colección llamada \verb|docs| donde se guardará en el futuro todos los markdown de la app. Con está colección creada pasamos a crear un archivo en \verb|src/pages| llamado \verb|[...slug].astro|, que recibirá cualquier ruta desde la ruta principal de la web. Dentro de este archivo se creará la función \verb|getStaticPaths|, en la que se hará uso de la función de Astro \verb|getCollection|, que permite conseguir una lista con datos importantes de cada archivo markdown en la colección deseada, entre los datos de cada entrada en este caso el que nos interesa es \verb|slug|, que justo coincide con el nombre del parámetro del archivo creado, este simbolizada la ruta que tendría el archivo como si fuera para una url. Esto es justo lo que queremos para identificar cada entrada estática a querer crear con el archivo \verb|[...slug].astro|, por lo que pasaremos el \verb|slug| obtenido como parámetro de cada entrada y además guardaremos para cada entrada los datos que se consiguieron para cada una con \verb|getCollection| y los guardaremos como \verb|props| de la página para así poder hacer uso de estos datos más tarde. Con todo esto lo que hemos conseguido es que para cada archivo markdown creado dentro de la colección \verb|docs|, se cree automáticamente un página nueva en la aplicación con esa misma ruta. En la figura \ref{fig:adastraStaticPaths} se puede ver un ejemplo parecido a la función \verb|getStaticPaths| usada.
+
+\begin{figure}
+    \begin{lstlisting}[language=Javascript]
+        export const getStaticPaths = async () => {
+          const allPages = await getCollection("docs");
+          return allPages
+            .map((page) => {
+              return { params: { page.slug }, props: page };
+            })
+            .filter((value) => value != undefined);
+        };
+    \end{lstlisting}
+    \caption{Ejemplo de la función getStaticPaths usada para la creación del contenido}
+    \label{fig:adastraStaticPaths}
+\end{figure}
+
+Ahora lo único que faltaría es añadir el Html que quiera que se muestre por cada entrada de la aplicación. Para esto lo primero que haremos será crear un \verb|Layout| que se encargará de añadir estilo a toda las páginas y mostrar funcionalidades como el sistema de navegación, del que hablaremos posteriormente. Con este layout hecho, solo faltaría mostrar el contenido del propio archivo markdown al que está asociado cada página, para ello aprovecharemos que anteriormente se paso los datos de cada markdown como \verb|props| de las páginas para obtener la función \verb|render|, que convierte el contenido markdown a un componente de Astro que usaremos en la página. Con esto ya se puede acceder al contenido de cada archivo markdown de la app. En la figura \ref{fig:adastraMain} se puede ver un ejemplo que muestra lo explicado.
+
+\begin{figure}
+    \begin{lstlisting}[language=Javascript]
+        ---
+        ...
+        export type Props = CollectionEntry<"docs">;
+        const { data, render } = Astro.props;
+        const { Content } = await render();
+        ---
+        
+        <BaseLayout data={data}>
+          <Content />
+        </BaseLayout>
+    \end{lstlisting}
+    \caption{Ejemplo con el html del archivo [...slug].astro}
+    \label{fig:adastraMain}
+\end{figure}
+
+
+
+
+\subsection{El sistema de navegación en función de la rutas}
+
+Como se dijo anteriormente en el diseño el LMS incorpora un sistema de navegación incorporado para poder movernos entre los diferentes contenidos de la aplicación. En este caso como se dijo en el apartado anterior el contenido se encuentra en una colección de archivos markdown llamada \verb|docs|, por lo que el sistema de navegación también hará uso de del sistema de colecciones de Astro. Ahora en cuanto a lo visto anteriormente del apartado de diseño en nuestra implementación \verb|entry|, \verb|section| y \verb|tab| sería la mostrada en la figura \ref{fig:navTypes}
+
+\begin{figure}
+    \begin{lstlisting}[language=Javascript]
+        export type Entry = {
+          text: string;
+          slug: string;
+        };
+        
+        export type Section = {
+          name: string;
+          entries: Entry[];
+        };
+        
+        export type NavegationTab = {
+          type: string;
+          sections: Section[];
+        };
+    \end{lstlisting}
+    \caption{Tipos que representan la navegación}
+    \label{fig:navTypes}
+\end{figure}
+
+Teniendo en cuenta estos tipos lo que se creo fue una función encargada de obtener la colección \verb|docs| con \verb|getCollection|. Ahora de estos datos extraemos solo lo que vayamos a necesitar que sería el \verb|slug|, separando cada parte de la ruta en función de \verb|/|,  y \verb|title| de cada entrada. Esto quedaría como lo msotrado en la figura \ref{fig:getNavigation1}
+
+\begin{figure}
+    \begin{lstlisting}[language=Javascript]
+    export const getNavigation = async (): Promise<NavegationTab[]> => {
+      if (navegationTabs != undefined) return navegationTabs;
+    
+      const allPages = await getCollection("docs");
+      const routes = allPages.map(({ slug, data }) => ({
+        route: slug.split("/"),
+        title: data.title,
+      }));
+    ...
+    }
+    \end{lstlisting}
+    \caption{Primera parte de la función getNavigation}
+    \label{fig:getNavigation1}
+\end{figure}
+
+
+\begin{verbatim}
+
+\end{verbatim}
+
+Teniendo ahora para cada archivo markdown su ruta separada en sus respectivas partes, podemos empezar a construir un objeto de tipo \verb|NavigationTab| usando las diferentes partes de cada ruta. Para esto crearemos un objeto llamado \verb|navigationWithId|, en el que guardaremos los diferentes \verb|NavegationTab| que se vayan consiguiendo. Además como se comento en el apartado de diseño, se le pide al usuario que introduzca un número delante de cada parte de la ruta para así añadir un orden a cada parte, por esto se añade un parámetro \verb|id| temporal a \verb|Entry|, \verb|Section| y \verb|NavegationTab| en el que se extraerá el número añadido en la ruta para definir el orden. Para hacer esto, se creará otra función que dividirá un texto en \verb|id| y \verb|text|, y otra función para cada parte que se encargue de ver si esa parte de la ruta con esa id ya está agregada, si no la crea. Estas funciones se pueden ver en la figura \ref{fig:navCreationFunc} y como seguiría la función \verb|getNavigation| en la figura \ref{fig:getNavigation2}.
+
+\begin{figure}
+    \begin{lstlisting}[language=Javascript]
+    const getTabIndex = (
+      navigationWithId: NavegationTabWithId[], tabId: number, tabText: string
+    ): number | undefined => {
+      if (Number.isNaN(tabId)) return;
+      const tabIndex = navigationWithId.findIndex(
+        (value) => value.type === tabText
+      );
+      if (tabIndex !== -1) return tabIndex;
+      navigationWithId.push({ id: tabId, sections: [], type: tabText });
+      return navigationWithId.length - 1;
+    };
+    
+    const getSectionIndex = (
+      navigationWithId: NavegationTabWithId[], tabIndex: number,
+      sectionId: number, sectionText: string
+    ): number | undefined => {
+      if (Number.isNaN(sectionId)) return;
+      const sectionIndex = navigationWithId[tabIndex].sections.findIndex(
+        (value) => value.name === sectionText
+      );
+      if (sectionIndex !== -1) return sectionIndex;
+      navigationWithId[tabIndex].sections.push({
+        id: sectionId, entries: [], name: sectionText,
+      });
+      return navigationWithId[tabIndex].sections.length - 1;
+    };
+    
+    const getEntryIndex = (
+      navigationWithId: NavegationTabWithId[], tabIndex: number, sectionIndex: number,
+      entryId: number, entrySlug: string, entryText: string
+    ): number | undefined => {
+      if (Number.isNaN(entryId)) return;
+      const entryIndex = navigationWithId[tabIndex].sections[
+        sectionIndex
+      ].entries.findIndex((value) => value.slug === entrySlug);
+      if (entryIndex === -1)
+        navigationWithId[tabIndex].sections[sectionIndex].entries.push({
+          id: entryId, slug: entrySlug, text: entryText,
+        });
+      return sectionIndex;
+    };
+    \end{lstlisting}
+    \caption{Funciones encargadas de buscar o crear las partes de una ruta}
+    \label{fig:navCreationFunc}
+\end{figure}
+
+\begin{figure}
+    \begin{lstlisting}[language=Javascript]
+    export const getNavigation = async (): Promise<NavegationTab[]> => {
+    ...
+      const navigationWithId: NavegationTabWithId[] = [];
+      routes.forEach(({ route, title }) => {
+        if (route == undefined) return;
+        if (route.length < 2 || route.length > 3) return;
+    
+        const [tab, section, entry] = route;
+        if (entry != undefined) {
+          const { id: tabId, text: tabText } = extractIdAndText(tab);
+          const tabTitleText = kebabCaseToTitleCase(tabText);
+          const tabIndex = getTabIndex(navigationWithId, tabId, tabTitleText);
+          if (tabIndex == undefined) return;
+    
+          const { id: sectionId, text: sectionText } = extractIdAndText(section);
+          const sectionTitleText = kebabCaseToTitleCase(sectionText);
+          const sectionIndex = getSectionIndex(
+            navigationWithId, tabIndex, sectionId, sectionTitleText
+          );
+          if (sectionIndex == undefined) return;
+    
+          const { id: entryId, text: entrySlug } = extractIdAndText(entry);
+          const entryText = title;
+          getEntryIndex(
+            navigationWithId, tabIndex, sectionIndex, entryId,
+            `/${tabText}/${sectionText}/${entrySlug}`, entryText
+          );
+        }
+      });
+    ...
+    }
+    \end{lstlisting}
+    \caption{Segunda parte de la función getNavigation}
+    \label{fig:getNavigation2}
+\end{figure}
+
+Con el objeto \verb|navigationWithId| ya construido lo único que queda usar las ids para ordenar los arrays y eliminar las ids temporales que ya no se necesitan. En la figura \ref{fig:getNavigation3} se puede ver como se ordena los arrays y se finaliza la función \verb|getNavigation|.
+
+\begin{figure}
+    \begin{lstlisting}[language=Javascript]
+    export const getNavigation = async (): Promise<NavegationTab[]> => {
+    ...
+      navegationTabs = navigationWithId
+        .sort((firstNav, secondNav) => firstNav.id - secondNav.id)
+        .map(({ sections, type }) => ({
+          type,
+          sections: sections
+            .sort(
+              (firstSection, secondSection) => firstSection.id - secondSection.id
+            )
+            .map(({ entries, name }) => ({
+              name,
+              entries: entries
+                .sort((firstEntry, secondEntry) => firstEntry.id - secondEntry.id)
+                .map(({ id, ...entry }) => entry),
+            })),
+        }));
+
+      return navegationTabs;
+    };
+    \end{lstlisting}
+    \caption{Parte final de la función getNavigation}
+    \label{fig:getNavigation3}
+\end{figure}
+
+\subsection{Información de los estudiantes}
+
+Una de las páginas que se le dan hechas al usuario es una llamada \verb|students|, está se encargará de recoger los datos de la organización de GitHub, para construir una lista de cartas que muestran información relevante de cada estudiante y sus diferentes labs. Para esto se hacen diferentes peticiones a la API GraphQL de GitHub, encapsuladas en varias funciones. Por ejemplo hay una función que se encarga de obtener la información básica de cada estudiante como su nombre, el link a su GitHub su foto de usuario, etc, se puede ver en la figura \ref{fig:userInfo}. Quedando como resultado en la página algo parecido a lo que se puede ver en la figura \ref{fig:userInfoCard}
+
+\begin{figure}
+    \begin{lstlisting}[language=Javascript]
+    export const getUsers = async (roleFilter?: string[]): Promise<UserInfo[]> => {
+      const response = await fetch("https://api.github.com/graphql", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `BEARER ${import.meta.env.GITHUB_SECRET}`,
+        },
+        body: JSON.stringify({
+          query: `
+            query ($org: String!, $after: String) {
+              organization(login: $org) {
+                membersWithRole(first: 100, after: $after) {
+                  edges {
+                    node {
+                      login
+                      name
+                      avatarUrl
+                      url
+                    }
+                    role
+                  }
+                }
+              }
+            }
+          `,
+          variables: {
+            org: organizationName,
+          },
+        }),
+      });
+      const { data }: UsersQuery = await response.json();
+      if (roleFilter == undefined)
+        return data.organization.membersWithRole.edges.map(({ node }) => node); 
+      return data.organization.membersWithRole.edges.filter((edge) => roleFilter.includes(edge.role)).map(({ node }) => node);
+    };
+    \end{lstlisting}
+    \caption{Query GraphQl con la información básica de los estudiantes}
+    \label{fig:userInfo}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \includegraphics{images/userInfoCard.png}
+    \caption{Carta con la información de un estudiante}
+    \label{fig:userInfoCard}
+\end{figure}

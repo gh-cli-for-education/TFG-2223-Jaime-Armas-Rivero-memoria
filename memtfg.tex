@@ -5,7 +5,7 @@
 \usepackage[utf8]{inputenc}
 \usepackage[spanish]{babel}
 \usepackage{alltt}
-\usepackage[citestyle=numeric,bibstyle=apa]{biblatex}
+\usepackage[citestyle=apa,bibstyle=apa]{biblatex}
 
 \usepackage[ruled,vlined,commentsnumbered,linesnumbered,inoutnumbered,titlenotnumbered,noend]{algorithm2e}
 \SetKwRepeat{Do}{do}{while}
@@ -39,7 +39,9 @@
 \usepackage{lineno}
 \usepackage{epigraph}
 %\usepackage[sanitize=none]{glossaries}
-\usepackage[toc]{glossaries}
+\usepackage{glossaries}
+
+\usepackage{wrapfig}
 
 %Define the listing package
 \usepackage{listings} %code highlighter
@@ -218,7 +220,7 @@ captionpos=b
 \begin{flushright}
         {\Huge AdAstra: Un Generador Estático de Sistemas de Gestión de Aprendizaje %(LMS)
         } \\[2.5mm]
-        %{\Large \textit{AdAstra}} \\[5mm]
+        {\Large \textit{AdAstra: A Static Learning Management System Generator}} \\[5mm]
         {\Large Jaime Armas Rivero} \\[5mm]
 
 \end{flushright}
@@ -275,7 +277,7 @@ Agradecimientos
 \hspace{3mm}
 
 \begin{large}
-A mis amigos graduados por aconsejarme, fortalecerme y confiar en mí.\\
+A mi familia y amigos por aconsejarme, fortalecerme y confiar en mí.\\
 \end{large}
 
 %}
@@ -308,7 +310,7 @@ bajo el término  GitHub Education y que incluye no solo descuentos,
 foros, congresos, becas, etc. sino también herramientas específicas para la educación como  GitHub Classroom, 
 la cual da soporte al proceso de asignación de tareas.
 
-Además, debido a la creciente popularización de las páginas web estáticas basadas en la metodología JAMstack
+Además, debido a la creciente popularización de las páginas web estáticas basadas en la metodología Jamstack
 se está extendiendo cada vez más su uso y están saliendo nuevas tecnologías que se respalden en estas.
 
 Este trabajo presenta una herramienta que permita generar LMS estáticos, facilitando el trabajo y configuración de los mismos.
@@ -317,18 +319,6 @@ y hacen uso de los servicios y herramientas que proporciona GitHub.
 La cual se aprovechara de la API GraphQL de GitHub para conectarse con las tareas e información
 dentro la organización creada por el profesor para impartir sus clases e incorporarlas dentro del LMS.
 
-% Este trabajo presenta una gh-extension denominada \verb|gh-edu| 
-% que pretende ser la base para un ecosistema de extensiones que  
-% facilita el flujo de trabajo diario de profesores y alumnos
-% en tareas como: la creación y manejo de organizaciones asociadas a asignaturas,
-% la creación y manejo de asignaciones de tareas,
-% ayudar en el descubrimiento de casos de plagio,
-% obtener información sobre la actividad de los alumnos,
-% facilitar la respuesta pronta a las dudas, 
-% facilitar la elaboración la retroalimentación al alumno y
-% mejorar la eficiencia en los procesos de evaluación. 
-% Es nuestra esperanza que esta herramienta sea de utilidad para los docentes que utilizan GitHub y que 
-% en el futuro aparezcan contribuciones de la comunidad con extensiones que cubran nuevos aspectos de la labor docente.
 \begin{palabrasClave}
 github-education, astro, github-classroom, graphql, git, javascript, typescript
 \end{palabrasClave}
@@ -345,7 +335,7 @@ The company itself supports these initiatives within a group of actions that fal
 which includes not only discounts, forums, conferences, scholarships, etc. but also specific tools for
 education such as GitHub Classroom, which supports the task assignment process.
 
-In addition, due to the growing popularity of static web pages based on the JAMstack methodology,
+In addition, due to the growing popularity of static web pages based on the Jamstack methodology,
 their use is increasingly widespread and new technologies that rely on them are emerging.
 
 This work presents a tool that allows generating static LMS, facilitating their work and configuration.
@@ -485,8 +475,10 @@ github-education, astro, github-classroom, graphql, git, javascript, typescript
 
 \end{appendix}
 %\printnoidxglossaries
-\printglossary[title=Glosario, toctitle={\protect \LARGE Glosario}]
 
+\glsaddall
+\printglossaries
+\addcontentsline{toc}{chapter}{{\protect \LARGE Glosario}}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %\begin{thebibliography}{X}
 % Aquí figurará la bibliografía

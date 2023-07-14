@@ -2,35 +2,35 @@ La oferta de tecnologías a la hora de realizar un proyecto software es realment
 
 
 \section{GitHub}
-GitHub es uno de los ejes centrales de todo este trabajo. A pesar de que no sea una plataforma enfocada en la enseñanza, es innegable el valor y productividad que proporcionada a virtualmente todos los desarrolladores de software del mundo. Los profesores pueden gestionar las clases en el mismo ámbito en el que se desarrollan las prácticas o tareas, y con la herramienta desarrollada mejorar la interacción tanto de profesores como de alumnos de los datos guardados en los repositorios de GitHub Classroom.
+\verb|GitHub| \cite{github} es uno de los ejes centrales de todo este trabajo. A pesar de que no sea una plataforma enfocada en la enseñanza, es innegable el valor y productividad que proporcionada a virtualmente todos los desarrolladores de software del mundo. Los profesores pueden gestionar las clases en el mismo ámbito en el que se desarrollan las prácticas o tareas, y con la herramienta desarrollada mejorar la interacción tanto de profesores como de alumnos de los datos guardados en los repositorios de GitHub Classroom.
 
 \subsection{Las APIs de GitHub: REST y  GraphQL}
 Las \verb|API|s que nos proporciona GitHub son completamente necesarias. Sin ellas no podríamos tener ningún tipo de comunicación con los servicios de GitHub.
 
-Se proveen dos APIs: \verb|API REST|\cite{github-rest-api} y GraphQL\cite{github-graphql}. En este trabajo se hace mayormente uso de la \verb|API GraphQL|. Se ha decidido de esta forma, pues con \verb|GraphQL| podemos obtener solo los datos que queremos, y podemos recibir en una única llamada información que de otra forma requeriría varías llamadas a diferentes \emph{endpoints}.
+Se proveen dos APIs: \verb|API REST| \cite{github-rest} y \verb|GraphQL| \cite{github-graphql}. En este trabajo se hace mayormente uso de la API GraphQL. Se ha decidido de esta forma, pues con GraphQL podemos obtener solo los datos que queremos, y podemos recibir en una única llamada información que de otra forma requeriría varías llamadas a diferentes \emph{endpoints}.
 
 \section{Los Lenguajes JavaScript y TypeScript}
-El lenguaje de programación escogido es \verb|JavaScript|\cite{js} (a partir de ahora \verb|JS|), más concretamente su extensión \verb|Typescript|\cite{ts} (a partir de ahora \verb|TS|). Los motivos son variados. Por un lado, es uno de los lenguajes con el que tengo más experiencia y destreza programando. A su vez, si tenemos en cuenta que en el lado de desarrollo web tanto \verb|TS|\cite{ts} como \verb|JS|\cite{js} es uno de sus mayores pilares es normal entender su uso.
+El lenguaje de programación escogido es \verb|JavaScript| \cite{js} (a partir de ahora \verb|JS|), más concretamente su extensión \verb|Typescript| \cite{ts} (a partir de ahora \verb|TS|). Los motivos son variados. Por un lado, es uno de los lenguajes con el que tengo más experiencia y destreza programando. A su vez, si tenemos en cuenta que en el lado de desarrollo web tanto TS como JS es uno de sus mayores pilares es normal entender su uso.
 
 Dejando de lado su popularidad y centrándonos en propiedades más intrínsecas del lenguaje, podemos ver que no hay mejor lenguaje para el manejo de ficheros JSON (usado por las API de GitHub), también al ser un lenguaje interpretado y flexible me ha permitido ser muy productivo en la fase de diseño y prototipado.
 
-Se ha decidido usar \verb|TS| \cite{ts} antes que \verb|JS|\cite{js}, con el objetivo de minimizar bugs y aprovechar una mejor integración con editores de texto compatibles con: autocompletado inteligente, saltos a referencias, refactorización, etc.
+Se ha decidido usar TS antes que JS, con el objetivo de minimizar bugs y aprovechar una mejor integración con editores de texto compatibles con: autocompletado inteligente, saltos a referencias, refactorización, etc.
 
 No obstante, TypeScript es un lenguaje compilado y como tal requiere de su propio compilador. 
 Esto añadiría otra dependencia al sistema aparte, aunque a día de hoy muchos frameworks y herramientas proveén de soporte directo de este facilitando el uso a los propios usuarios. 
 
-En cuanto a dependencia de desarrollo, se ha usado como gestor de paquetes \verb|pnpm|\cite{pnpm} ya que se ha planteado usar un monorepo para almacenar todo los paquetes e aplicaciones de la herramienta y a día de hoy  \verb|pnpm|\cite{pnpm} es uno de los mejores gestores de paquetes que se integren con estos.
+En cuanto a dependencia de desarrollo, se ha usado como gestor de paquetes \verb|pnpm| \cite{pnpm} ya que se ha planteado usar un monorepo para almacenar todo los paquetes e aplicaciones de la herramienta y a día de hoy pnpm es uno de los mejores gestores de paquetes que se integren con estos.
 
 \section{El Lenguaje \LaTeX{} y Overleaf}
 Para la elaboración de este documento se ha usado \LaTeX{}, 
-en específico la implementación de \href{https://www.overleaf.com/}{overleaf}\cite{overlife}.
+en específico la implementación de \verb|overleaf| \cite{overleaf}.
 Gracias a esto hemos podido sincronizar con GitHub,
 mantener un historial del documento, 
 se ha simplificado la instalación de paquetes  y 
 tenemos una copia accesible en línea que se sincroniza automáticamente.
 
 \section{El sistema de compilación Turborepo}
-El manejo de un monorepo para almacenar todas las aplicaciones y paquetes relacionados con la herramienta que se está desarrollando puede ser un desafío en términos de gestión de dependencias y versiones. Para abordar este problema, se ha utilizado \verb|TurboRepo|\cite{turborepo}, una tecnología que facilita el manejo de monorepos a gran escala.
+El manejo de un monorepo para almacenar todas las aplicaciones y paquetes relacionados con la herramienta que se está desarrollando puede ser un desafío en términos de gestión de dependencias y versiones. Para abordar este problema, se ha utilizado \verb|TurboRepo| \cite{turborepo}, una tecnología que facilita el manejo de monorepos a gran escala.
 
 TurboRepo es una herramienta de gestión de monorepos que se integra con el sistema de control de versiones Git. Proporciona una solución eficiente y escalable para el manejo de dependencias y versiones de múltiples aplicaciones y paquetes que se encuentran en el mismo repositorio. Al usar TurboRepo, se pueden configurar y administrar fácilmente las dependencias entre diferentes aplicaciones y paquetes, y también se puede realizar una gestión más efectiva de las versiones de cada uno de ellos.
 
@@ -39,23 +39,22 @@ Además, TurboRepo proporciona otras funcionalidades, como la capacidad de crear
 En resumen, TurboRepo ha sido una elección clave para el manejo del monorepo que contiene todas las aplicaciones y paquetes relacionados con la herramienta que se está desarrollando. Su capacidad de gestionar dependencias y versiones a gran escala ha sido fundamental para mantener un proceso de desarrollo eficiente y escalable.
 
 \section{El framework Astro}
-Astro es una tecnología de construcción de aplicaciones web que se ha utilizado en este proyecto. Esta herramienta ofrece una solución moderna y rápida para el desarrollo de aplicaciones web basada en la idea de aplicaciones \verb|Multipaginas|\cite{multipage} y cero \verb|JS|\cite{js} dee forma predeterminada, permitiendo una integración fácil y eficiente con otras tecnologías y frameworks.
+\verb|Astro| \cite{astro} es una tecnología de construcción de aplicaciones web que se ha utilizado en este proyecto. Esta herramienta ofrece una solución moderna y rápida para el desarrollo de aplicaciones web basada en la idea de aplicaciones Multi-Páginas (MPA) y cero JS de forma predeterminada, permitiendo una integración fácil y eficiente con otras tecnologías y frameworks.
 
-Una de las principales ventajas de Astro es su capacidad para generar sitios web altamente optimizados y rápidos, esto es gracias a que principalmente es un framework de modelo \verb|SSG|\cite{ssg} cuya principal idea es enviar cero \verb|JS|\cite{js} al cliente a menos que se requiera de dar interactividad, aunque esto no quita que este permita realizar \verb|SSR|\cite{ssr}. Además, Astro cuenta con una sintaxis intuitiva y fácil de usar, lo que la hace accesible para los desarrolladores con diferentes niveles de experiencia.
+Una de las principales ventajas de Astro es su capacidad para generar sitios web altamente optimizados y rápidos, esto es gracias a que principalmente es un framework de modelo SSG cuya principal idea es enviar cero JS al cliente a menos que se requiera de dar interactividad, aunque esto no quita que este permita realizar SSR. Además, Astro cuenta con una sintaxis intuitiva y fácil de usar, lo que la hace accesible para los desarrolladores con diferentes niveles de experiencia.
 
 \subsection{Aplicación de múltiples páginas}
 Astro usa un arquitectura de \verb|Aplicación de múltiples páginas|\cite{multipage} en el que un sitio web que consta de varias páginas HTML, en su mayoría renderizadas en el servidor. Cuando navegas a una nueva página, tu navegador solicita una nueva página de HTML al servidor.
 
 \subsection{Soporte de multiples frameworks}
-Una de las cosas por la que más destaca Astro, es que es una herramienta que esta diseñada para ser completamente personalizable y agnóstica a cualquier framework. Esto permite el uso de componentes de otros frameworks para diseñar la aplicaciones web. Además permite seleccionar si eso componentes se quieren usar solo para añadir diseño a las páginas o para añadir interactividad a través de su arquitectura de \verb|islas de componentes|\cite{islas}.
+Una de las cosas por la que más destaca Astro, es que es una herramienta que esta diseñada para ser completamente personalizable y agnóstica a cualquier framework. Esto permite el uso de componentes de otros frameworks para diseñar la aplicaciones web. Además permite seleccionar si eso componentes se quieren usar solo para añadir diseño a las páginas o para añadir interactividad a través de su arquitectura de \verb|islas de componentes|\cite{astro-islands}.
 
 \subsection{Arquitectura de islas}
-Como se menciono anteriormente Astro presenta un modelo de arquitectura de \verb|islas de componentes|\cite{islas} (el cual vamos a llamar \verb|Astro Islands|). Un \verb|Astro Island| se refiere a un componente de UI interactivo en una página HTML predominantemente estática. Pueden existir varias islas en una página, y una isla siempre se renderiza en forma aislada. Piensa en ellos como islas en un mar de HTML estático y no interactivo.
+Como se menciono anteriormente Astro presenta un modelo de arquitectura de \verb|islas de componentes| \cite{astro-islands} (el cual vamos a llamar \verb|Astro Islands|). Un \verb|Astro Island| se refiere a un componente de UI interactivo en una página HTML predominantemente estática. Pueden existir varias islas en una página, y una isla siempre se renderiza en forma aislada. Piensa en ellos como islas en un mar de HTML estático y no interactivo.
 
 En Astro puedes utilizar cualquier framework de componentes de UI (React, Svelte, Vue, etc.). La técnica en la que se basa este patrón de arquitectura se conoce como hidratación parcial o selectiva a través de directivas que se añaden a los componentes de UI para señalar como quieren ser renderizados. Astro aprovecha esta técnica para hidratar las islas automáticamente.
 
-\subsection{Integración de metodología Jamstack}
-% Revisar
+\subsection{Integración de la metodología Jamstack}
 Astro se integra perfectamente con la metodología Jamstack, que se refiere a una arquitectura moderna para la construcción de aplicaciones web que combina una serie de tecnologías, incluyendo JavaScript, APIs, y sitios web estáticos.
 
 En la arquitectura Jamstack, los sitios web se crean como sitios estáticos que se sirven directamente desde una CDN (red de distribución de contenidos). Esto permite una carga rápida y una experiencia de usuario más fluida. Además, el uso de una CDN reduce significativamente la carga en el servidor y disminuye la posibilidad de errores.
@@ -64,18 +63,18 @@ Astro se ajusta perfectamente a la metodología Jamstack, ya que proporciona una
 
 En resumen, Astro es una herramienta ideal para la creación de sitios web estáticos en la metodología Jamstack, ya que proporciona una forma fácil de crear componentes de JavaScript que pueden ser reutilizados en diferentes partes del sitio web. Esto hace que la creación de sitios web sea más modular y escalable, lo que es esencial para una arquitectura Jamstack exitosa.
 
-\subsection{La sintexis MDX}
-De base Astro incluye soporte para archivos \verb|Markdown|\cite{md}, los cuales se usan comúnmente para crear contenido con mucho texto, como artículos de blog y documentación. Aunque estos presentán un problema de base y es que si se quiere dejar que el usuario escriba su contenido facilmente y facilitarle le reutilización de material o usar más funcionalidades de las que ya ofrece \verb|Markdown|\cite{md}. Es por esto que se ha obtado por usar unos de los plugins disponibles en \verb|Astro|\cite{astro}, \verb|MDX|\cite{mdx}, el cual combina lo ya existente de \verb|Markdown|\cite{md} con nuevas funcionalidades como usar sintaxis como \verb|JSX|\cite{jsx} o expresiones \verb|JS|\cite{js}.
+\subsection{La sintáxis MDX}
+De base Astro incluye soporte para archivos \verb|Markdown| \cite{md}, los cuales se usan comúnmente para crear contenido con mucho texto, como artículos de blog y documentación. Aunque estos presentán un problema de base y es que si se quiere dejar que el usuario escriba su contenido facilmente y facilitarle le reutilización de material o usar más funcionalidades de las que ya ofrece Markdown. Es por esto que se ha obtado por usar unos de los plugins disponibles en Astro, \verb|MDX| \cite{mdx}, el cual combina lo ya existente de Markdown con nuevas funcionalidades como usar sintaxis como JSX o expresiones JS.
 
 \section{El framework SolidJS}
-\verb|SolidJS|\cite{solid} ha sido el framework de UI que se ha usado junto a Astro para dar interactividad a la página generada por la aplicación. Este framework esta basado en componentes \verb|JSX|\cite{jsx} y su gran ventaja es su enfoque en la reactividad. Utiliza un sistema de reactividad para realizar un seguimiento eficiente de los cambios en el estado de la aplicación y actualizar solo los componentes afectados. Esto significa que cuando los datos cambian, solo se vuelven a renderizar los componentes relevantes, lo que resulta en un rendimiento óptimo y una experiencia de usuario fluida.
+\verb|SolidJS| \cite{solidjs} ha sido el framework de UI que se ha usado junto a Astro para dar interactividad a la página generada por la aplicación. Este framework esta basado en componentes JSX y su gran ventaja es su enfoque en la reactividad. Utiliza un sistema de reactividad para realizar un seguimiento eficiente de los cambios en el estado de la aplicación y actualizar solo los componentes afectados. Esto significa que cuando los datos cambian, solo se vuelven a renderizar los componentes relevantes, lo que resulta en un rendimiento óptimo y una experiencia de usuario fluida.
 
-SolidJS también ofrece una sintaxis concisa y expresiva para la definición de componentes. Los componentes se definen como funciones y se pueden utilizar hooks para gestionar el estado y los efectos secundarios. Además, SolidJS proporciona una capa de abstracción ligera sobre el \verb|DOM|\cite{dom}, lo que facilita la manipulación y actualización eficiente de los elementos de la interfaz de usuario. Todo esto sin el uso de un DOM virtual,como hacen otros lenguajes como \verb|React|\cite{react}, sino realizando pequeñas actualizaciones a nodos en el DOM real a través de la reactividad.
+SolidJS también ofrece una sintaxis concisa y expresiva para la definición de componentes. Los componentes se definen como funciones y se pueden utilizar hooks para gestionar el estado y los efectos secundarios. Además, SolidJS proporciona una capa de abstracción ligera sobre el DOM, lo que facilita la manipulación y actualización eficiente de los elementos de la interfaz de usuario. Todo esto sin el uso de un DOM virtual,como hacen otros lenguajes como \verb|React| \cite{react}, sino realizando pequeñas actualizaciones a nodos en el DOM real a través de la reactividad.
 
 Otra característica destacada de SolidJS es su tamaño compacto. El framework tiene un tamaño reducido en comparación con otros frameworks populares, lo que lo convierte en una opción muy atráctiva en este caso, ya que al trabajar con una página estática, la carga de este framework estará directamente en el lado del client, por lo que cuanto más se aligere la carga para este mejor.
 
 \section{La librería Tailwindcss}
-\verb|Tailwind CSS|\cite{tailwind} es un framework de diseño de interfaz de usuario altamente configurable y altamente utilitario. En lugar de proporcionar componentes predefinidos, Tailwind CSS se basa en un enfoque de clases utilitarias, lo que significa que ofrece una amplia gama de clases CSS que se pueden aplicar directamente a los elementos HTML para estilizarlos. Estas clases se utilizan para definir estilos, márgenes, espaciado, colores, tipografía y más.
+\verb|Tailwind CSS| \cite{tailwind} es un framework de diseño de interfaz de usuario altamente configurable y altamente utilitario. En lugar de proporcionar componentes predefinidos, Tailwind CSS se basa en un enfoque de clases utilitarias, lo que significa que ofrece una amplia gama de clases CSS que se pueden aplicar directamente a los elementos HTML para estilizarlos. Estas clases se utilizan para definir estilos, márgenes, espaciado, colores, tipografía y más.
 
 La principal ventaja de Tailwind CSS radica en su enfoque modular y altamente personalizable. En lugar de depender de un conjunto fijo de componentes, se pueden combinar y reutilizar las clases utilitarias para crear interfaces únicas y adaptables. Esto ofrece una gran flexibilidad y control sobre el diseño de la aplicación.
 
@@ -85,6 +84,6 @@ En el TFG, Tailwind CSS se utilizó como el framework principal de estilos para 
 
 \section{El manejador de paquetes Pnpm}
 
-\verb|PNPM|\ref{pnpm} es un administrador de paquetes para proyectos de desarrollo de software en JavaScript. A diferencia de otros administradores, PNPM utiliza un enfoque de almacenamiento global y compartido para las dependencias, lo que evita la duplicación de paquetes y ahorra espacio en disco. Su característica destacada, por la cual se decantó por usarse en este proyecto, es el soporte de \verb|workspaces|\ref{workspaces}, que permite crear un monorepo, donde múltiples proyectos comparten dependencias comunes, lo que facilita la gestión y el mantenimiento.
+\verb|PNPM| \cite{pnpm} es un administrador de paquetes para proyectos de desarrollo de software en JavaScript. A diferencia de otros administradores, PNPM utiliza un enfoque de almacenamiento global y compartido para las dependencias, lo que evita la duplicación de paquetes y ahorra espacio en disco. Su característica destacada, por la cual se decantó por usarse en este proyecto, es el soporte de \verb|workspaces| \cite{pnpm-workspaces}, que permite crear un monorepo, donde múltiples proyectos comparten dependencias comunes, lo que facilita la gestión y el mantenimiento.
 
 PNPM es especialmente útil en entornos de desarrollo que utilizan workspaces y monorepos, ya que reduce la necesidad de descargar y almacenar duplicados de dependencias compartidas. Esto agiliza el proceso de desarrollo al permitir la reutilización de dependencias entre proyectos y garantiza la coherencia de las versiones de las dependencias compartidas.
